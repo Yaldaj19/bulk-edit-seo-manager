@@ -1,0 +1,795 @@
+# Bulk Edit SEO Manager - translation template
+msgid ""
+msgstr ""
+"Project-Id-Version: Bulk Edit SEO Manager 1.3.0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: bulk-edit-seo\n"
+
+msgid "%d فیلتر تگزونومی"
+msgstr ""
+
+msgid "%d فیلتر متافیلد"
+msgstr ""
+
+msgid "-- انتخاب کنید --"
+msgstr ""
+
+msgid "<strong>Alt Text:</strong> متن جایگزین به صورت خودکار از عنوان محصول پر می‌شود"
+msgstr ""
+
+msgid "<strong>No Index/Follow:</strong> برای جلوگیری از ایندکس یا فالو لینک‌ها تیک بزنید"
+msgstr ""
+
+msgid "<strong>Variations:</strong> تغییرات روی Variations بلافاصله روی محصول اصلی تاثیر می‌گذارد"
+msgstr ""
+
+msgid "<strong>اسکرول:</strong> هر سطر به صورت مستقل اسکرول افقی دارد"
+msgstr ""
+
+msgid "<strong>انتخاب فیلدها:</strong> فیلدهایی که می‌خواهید ویرایش کنید را فعال کنید"
+msgstr ""
+
+msgid "<strong>انتخاب پست‌تایپ:</strong> ابتدا از تنظیمات، نوع پست مورد نظر را انتخاب کنید"
+msgstr ""
+
+msgid "<strong>انتخاب گروهی:</strong> با چک‌باکس «انتخاب همه» می‌توانید چند آیتم را همزمان انتخاب کنید"
+msgstr ""
+
+msgid "<strong>تصاویر:</strong> تصاویر با نام یکسان جایگزین می‌شوند و قدیمی کاملاً حذف می‌شود"
+msgstr ""
+
+msgid "<strong>تصویر Variation:</strong> هر Variation می‌تواند تصویر مخصوص خود را داشته باشد"
+msgstr ""
+
+msgid "<strong>تصویر شاخص:</strong> روی باکس تصویر کلیک کنید تا تصویر جدید انتخاب کنید"
+msgstr ""
+
+msgid "<strong>تغییر پست‌تایپ:</strong> برای کار با پست‌تایپ دیگر به تنظیمات بروید"
+msgstr ""
+
+msgid "<strong>توجه:</strong> جایگزینی و کپی ستون فقط در مرورگر اعمال می‌شوند؛ برای ثبت نهایی حتماً «ذخیره تغییرات» را بزنید"
+msgstr ""
+
+msgid "<strong>توضیحات سئو:</strong> Meta Description برای نتایج گوگل"
+msgstr ""
+
+msgid "<strong>تگزونومی:</strong> فیلتر بر اساس دسته‌بندی و برچسب"
+msgstr ""
+
+msgid "<strong>جایگزینی خودکار:</strong> تصویر قدیمی با همان نام به طور خودکار حذف و جایگزین می‌شود"
+msgstr ""
+
+msgid "<strong>جستجو:</strong> در عنوان و محتوا جستجو کنید"
+msgstr ""
+
+msgid "<strong>جست‌وجو و جایگزینی:</strong> در یک ستون مشخص، یک عبارت را در همه‌ی ردیف‌ها پیدا و جایگزین می‌کند"
+msgstr ""
+
+msgid "<strong>خروجی CSV:</strong> ردیف‌های فیلترشده‌ی فعلی را با ستون فیلدهای انتخابی دانلود می‌کند (با BOM برای نمایش درست فارسی در Excel)"
+msgstr ""
+
+msgid "<strong>ذخیره تغییرات:</strong> حتماً پس از ویرایش دکمه ذخیره را بزنید"
+msgstr ""
+
+msgid "<strong>ذخیره نهایی:</strong> حتماً دکمه «ذخیره تغییرات» را بزنید"
+msgstr ""
+
+msgid "<strong>شبکه‌های اجتماعی:</strong> ویرایش عنوان و توضیحات OpenGraph و توییتر (بر اساس پلاگین سئوی فعال)"
+msgstr ""
+
+msgid "<strong>عملیات گروهی:</strong> از منوی Bulk Actions برای تغییر وضعیت یا حذف گروهی استفاده کنید"
+msgstr ""
+
+msgid "<strong>عنوان سئو:</strong> عنوان متا را برای موتورهای جستجو تنظیم کنید"
+msgstr ""
+
+msgid "<strong>فیلتر کردن:</strong> از فیلترها برای یافتن سریع‌تر آیتم‌های خاص استفاده کنید"
+msgstr ""
+
+msgid "<strong>قیمت‌گذاری:</strong> قیمت و موجودی هر Variation به صورت مجزا قابل تنظیم است"
+msgstr ""
+
+msgid "<strong>متافیلدها:</strong> فیلترهای پیشرفته متافیلدهای سفارشی (دکمه «فیلترهای پیشرفته»)"
+msgstr ""
+
+msgid "<strong>نمایش Variations:</strong> روی دکمه فلش کنار شناسه کلیک کنید"
+msgstr ""
+
+msgid "<strong>نوع محصول:</strong> فیلتر محصولات ساده، متغیر، گروهی و..."
+msgstr ""
+
+msgid "<strong>ورود CSV:</strong> همان فایل را پس از ویرایش در Excel/Sheets آپلود کنید؛ بر اساس ستون <code>ID</code> آیتم‌ها به‌روزرسانی می‌شوند"
+msgstr ""
+
+msgid "<strong>وضعیت:</strong> فیلتر بر اساس منتشر شده، پیش‌نویس، خصوصی و..."
+msgstr ""
+
+msgid "<strong>ویرایش Alt:</strong> می‌توانید Alt Text را دستی ویرایش کنید"
+msgstr ""
+
+msgid "<strong>ویرایش مستقل:</strong> هر Variation (سایز، رنگ و...) قابل ویرایش جداگانه است"
+msgstr ""
+
+msgid "<strong>ویرایش مستقیم:</strong> فیلدها را مستقیماً در جدول ویرایش کنید"
+msgstr ""
+
+msgid "<strong>کلمه کلیدی:</strong> Focus Keyword خود را تعیین کنید"
+msgstr ""
+
+msgid "<strong>کپی به کل ستون (Fill-down):</strong> یک مقدار را روی تمام ردیف‌های یک ستون می‌ریزد"
+msgstr ""
+
+msgid "<strong>گالری:</strong> روی دکمه + کلیک کنید تا تصاویر گالری اضافه کنید"
+msgstr ""
+
+msgid "<strong>یکپارچگی کامل:</strong> پلاگین با Yoast SEO، Rank Math و SEOPress کار می‌کند"
+msgstr ""
+
+msgid "No Follow"
+msgstr ""
+
+msgid "No Follow (عدم دنبال کردن لینک‌ها)"
+msgstr ""
+
+msgid "No Index"
+msgstr ""
+
+msgid "No Index (عدم نمایش در موتورهای جستجو)"
+msgstr ""
+
+msgid "Variation یافت نشد"
+msgstr ""
+
+msgid "آیا از اعمال این عملیات روی %d مورد اطمینان دارید؟"
+msgstr ""
+
+msgid "آیا از ذخیره %d مورد تغییر یافته اطمینان دارید؟"
+msgstr ""
+
+msgid "آیا مطمئن هستید؟"
+msgstr ""
+
+msgid "ابتدا یک نوع پست انتخاب کنید."
+msgstr ""
+
+msgid "ابتدا یک نوع پست را در تنظیمات انتخاب کنید."
+msgstr ""
+
+msgid "ابزارهای پیشرفته (CSV / جایگزینی / کپی ستون)"
+msgstr ""
+
+msgid "ابعاد تصویر باید حداقل %1$dx%2$d پیکسل باشد."
+msgstr ""
+
+msgid "ارتفاع"
+msgstr ""
+
+msgid "استفاده از این تصویر"
+msgstr ""
+
+msgid "اطلاعات نامعتبر است"
+msgstr ""
+
+msgid "اعمال"
+msgstr ""
+
+msgid "اعمال روی همه"
+msgstr ""
+
+msgid "اعمال فیلتر"
+msgstr ""
+
+msgid "افزودن به گالری"
+msgstr ""
+
+msgid "افزودن تصویر"
+msgstr ""
+
+msgid "انتخاب تصاویر گالری"
+msgstr ""
+
+msgid "انتخاب تصویر"
+msgstr ""
+
+msgid "انتخاب فیلدها"
+msgstr ""
+
+msgid "انتخاب نوع پست"
+msgstr ""
+
+msgid "انتخاب همه"
+msgstr ""
+
+msgid "انتخاب کنید..."
+msgstr ""
+
+msgid "انتشار"
+msgstr ""
+
+msgid "انتقال به زباله‌دان"
+msgstr ""
+
+msgid "برای شروع، ابتدا نوع پست و فیلدهای مورد نظر خود را انتخاب کنید"
+msgstr ""
+
+msgid "برند"
+msgstr ""
+
+msgid "برچسب"
+msgstr ""
+
+msgid "برچسب محصول"
+msgstr ""
+
+msgid "برچسب‌ها"
+msgstr ""
+
+msgid "تصویر با موفقیت آپلود شد"
+msgstr ""
+
+msgid "تصویر با موفقیت حذف شد"
+msgstr ""
+
+msgid "تصویر شاخص"
+msgstr ""
+
+msgid "تعداد"
+msgstr ""
+
+msgid "تعداد %d مورد از CSV ذخیره شد"
+msgstr ""
+
+msgid "تعداد %d مورد با موفقیت ذخیره شد"
+msgstr ""
+
+msgid "تعداد موجودی"
+msgstr ""
+
+msgid "تعداد نمایش"
+msgstr ""
+
+msgid "تعداد نمایش در هر صفحه:"
+msgstr ""
+
+msgid "تغییرات ذخیره شد"
+msgstr ""
+
+msgid "تنظیمات"
+msgstr ""
+
+msgid "تنظیمات انجام نشده است!"
+msgstr ""
+
+msgid "تنظیمات با موفقیت ذخیره شد"
+msgstr ""
+
+msgid "تنظیمات نمایش"
+msgstr ""
+
+msgid "تنظیمات ویرایش گروهی پست تایپ ها"
+msgstr ""
+
+msgid "توضیحات OpenGraph"
+msgstr ""
+
+msgid "توضیحات توییتر"
+msgstr ""
+
+msgid "توضیحات سئو (Rank Math)"
+msgstr ""
+
+msgid "توضیحات سئو (SEOPress)"
+msgstr ""
+
+msgid "توضیحات سئو (Yoast)"
+msgstr ""
+
+msgid "توضیحات کوتاه"
+msgstr ""
+
+msgid "تگزونومی‌ها"
+msgstr ""
+
+msgid "جایگزین با..."
+msgstr ""
+
+msgid "جایگزینی انجام شد — تعداد:"
+msgstr ""
+
+msgid "جستجو"
+msgstr ""
+
+msgid "جستجو در عنوان، محتوا و خلاصه..."
+msgstr ""
+
+msgid "جستجو..."
+msgstr ""
+
+msgid "جستجو:"
+msgstr ""
+
+msgid "جست‌وجو و جایگزینی در ستون"
+msgstr ""
+
+msgid "جنس"
+msgstr ""
+
+msgid "حجم فایل نباید بیشتر از 10 مگابایت باشد."
+msgstr ""
+
+msgid "حذف این فیلتر"
+msgstr ""
+
+msgid "حذف تصویر"
+msgstr ""
+
+msgid "خروجی CSV"
+msgstr ""
+
+msgid "خروجی CSV از ردیف‌های فیلترشده"
+msgstr ""
+
+msgid "خصوصی"
+msgstr ""
+
+msgid "خطا"
+msgstr ""
+
+msgid "خطا در اجرای عملیات"
+msgstr ""
+
+msgid "خطا در بارگذاری فیلدها. لطفاً دوباره تلاش کنید."
+msgstr ""
+
+msgid "خطا در ذخیره"
+msgstr ""
+
+msgid "خطا در ذخیره‌سازی"
+msgstr ""
+
+msgid "خطا در ورود CSV"
+msgstr ""
+
+msgid "خطا در کپی کردن. لطفاً دستی کپی کنید:"
+msgstr ""
+
+msgid "خلاصه"
+msgstr ""
+
+msgid "خواندن فایل ممکن نشد."
+msgstr ""
+
+msgid "داده‌ای برای ذخیره وجود ندارد"
+msgstr ""
+
+msgid "در انتظار"
+msgstr ""
+
+msgid "در انتظار بررسی"
+msgstr ""
+
+msgid "در انتظار تامین"
+msgstr ""
+
+msgid "در حال اجرا..."
+msgstr ""
+
+msgid "در حال بارگذاری فیلدها..."
+msgstr ""
+
+msgid "در حال ذخیره..."
+msgstr ""
+
+msgid "در حال ذخیره‌سازی..."
+msgstr ""
+
+msgid "در حال ورود CSV..."
+msgstr ""
+
+msgid "دسترسی غیرمجاز"
+msgstr ""
+
+msgid "دسته‌بندی"
+msgstr ""
+
+msgid "دسته‌بندی محصول"
+msgstr ""
+
+msgid "دسته‌بندی‌ها"
+msgstr ""
+
+msgid "ذخیره تغییرات"
+msgstr ""
+
+msgid "ذخیره تنظیمات و تایید"
+msgstr ""
+
+msgid "ذخیره شد"
+msgstr ""
+
+msgid "راهنمای کامل استفاده"
+msgstr ""
+
+msgid "رفتن به تنظیمات"
+msgstr ""
+
+msgid "رفتن به ویرایشگر"
+msgstr ""
+
+msgid "رنگ"
+msgstr ""
+
+msgid "زباله‌دان"
+msgstr ""
+
+msgid "زمان‌بندی شده"
+msgstr ""
+
+msgid "سایز"
+msgstr ""
+
+msgid "ستون «ID» در فایل پیدا نشد. از همان ساختار خروجی CSV استفاده کنید."
+msgstr ""
+
+msgid "شروع کار"
+msgstr ""
+
+msgid "شما %d تغییر ذخیره نشده دارید. آیا مطمئن هستید؟"
+msgstr ""
+
+msgid "شناسه"
+msgstr ""
+
+msgid "شناسه محصول (SKU)"
+msgstr ""
+
+msgid "صفحه %1$s از %2$s"
+msgstr ""
+
+msgid "طول"
+msgstr ""
+
+msgid "عبارت جستجو را وارد کنید."
+msgstr ""
+
+msgid "عدم دسترسی به ویرایش این پست"
+msgstr ""
+
+msgid "عرض"
+msgstr ""
+
+msgid "عملیات انجام نشد"
+msgstr ""
+
+msgid "عملیات با موفقیت روی %d مورد انجام شد"
+msgstr ""
+
+msgid "عملیات گروهی"
+msgstr ""
+
+msgid "عملیات یا آیتم‌ها انتخاب نشده‌اند"
+msgstr ""
+
+msgid "عنوان"
+msgstr ""
+
+msgid "عنوان OpenGraph"
+msgstr ""
+
+msgid "عنوان توییتر"
+msgstr ""
+
+msgid "عنوان سئو (Rank Math)"
+msgstr ""
+
+msgid "عنوان سئو (SEOPress)"
+msgstr ""
+
+msgid "عنوان سئو (Yoast)"
+msgstr ""
+
+msgid "فایل CSV روی آیتم‌های موجود (بر اساس ستون ID) اعمال می‌شود. ادامه می‌دهید؟"
+msgstr ""
+
+msgid "فایل آپلود شده یک تصویر معتبر نیست."
+msgstr ""
+
+msgid "فایل خالی یا نامعتبر است."
+msgstr ""
+
+msgid "فایل یافت نشد"
+msgstr ""
+
+msgid "فایلی آپلود نشده است."
+msgstr ""
+
+msgid "فایلی انتخاب نشده است"
+msgstr ""
+
+msgid "فرمت تصویر معتبر نیست. فقط JPG, PNG, GIF و WebP مجاز است."
+msgstr ""
+
+msgid "فعال"
+msgstr ""
+
+msgid "فقط فایل CSV مجاز است."
+msgstr ""
+
+msgid "فیلترهای فعال:"
+msgstr ""
+
+msgid "فیلترهای پیشرفته"
+msgstr ""
+
+msgid "فیلدهای سئو"
+msgstr ""
+
+msgid "فیلدهایی که می‌خواهید در لیست ویرایش نمایش داده شوند را انتخاب کنید."
+msgstr ""
+
+msgid "فیلدی انتخاب نشده است!"
+msgstr ""
+
+msgid "فیلدی برای این نوع پست یافت نشد."
+msgstr ""
+
+msgid "قیمت"
+msgstr ""
+
+msgid "قیمت عادی"
+msgstr ""
+
+msgid "قیمت فروش"
+msgstr ""
+
+msgid "قیمت فروش ویژه"
+msgstr ""
+
+msgid "قیمت ویژه"
+msgstr ""
+
+msgid "لطفاً ابتدا به صفحه تنظیمات بروید و یک نوع پست انتخاب کنید."
+msgstr ""
+
+msgid "لطفاً به صفحه تنظیمات بروید و فیلدهای مورد نظر را انتخاب کنید."
+msgstr ""
+
+msgid "لطفاً فیلترهای خود را تغییر دهید یا جستجوی دیگری انجام دهید."
+msgstr ""
+
+msgid "لطفاً یک عملیات و حداقل یک مورد انتخاب کنید"
+msgstr ""
+
+msgid "لطفاً یک نوع پست انتخاب کنید"
+msgstr ""
+
+msgid "لینک کانونیکال (Rank Math)"
+msgstr ""
+
+msgid "لینک کانونیکال (SEOPress)"
+msgstr ""
+
+msgid "لینک کانونیکال (Yoast)"
+msgstr ""
+
+msgid "متافیلدها"
+msgstr ""
+
+msgid "متن جایگزین (Alt)"
+msgstr ""
+
+msgid "محتوا"
+msgstr ""
+
+msgid "محصولات متغیر"
+msgstr ""
+
+msgid "مدل"
+msgstr ""
+
+msgid "مدیریت تصاویر"
+msgstr ""
+
+msgid "مدیریت موجودی"
+msgstr ""
+
+msgid "مقدار..."
+msgstr ""
+
+msgid "منتشر شده"
+msgstr ""
+
+msgid "موجود"
+msgstr ""
+
+msgid "موجودی"
+msgstr ""
+
+msgid "مورد انتخاب شده"
+msgstr ""
+
+msgid "موردی یافت نشد"
+msgstr ""
+
+msgid "می‌توانید چند مورد انتخاب کنید (Ctrl+Click)"
+msgstr ""
+
+msgid "نام فایل حاوی پسوند غیرمجاز است."
+msgstr ""
+
+msgid "ناموجود"
+msgstr ""
+
+msgid "نامک"
+msgstr ""
+
+msgid "نمایش %1$d تا %2$d از %3$d مورد"
+msgstr ""
+
+msgid "نمایش Variations"
+msgstr ""
+
+msgid "نوع محصول"
+msgstr ""
+
+msgid "نوع واقعی فایل با پسوند آن مطابقت ندارد."
+msgstr ""
+
+msgid "نوع پست انتخاب نشده است"
+msgstr ""
+
+msgid "نوع پست معتبر نیست"
+msgstr ""
+
+msgid "نوع:"
+msgstr ""
+
+msgid "نکات مهم"
+msgstr ""
+
+msgid "همه"
+msgstr ""
+
+msgid "همه (بدون زباله‌دان)"
+msgstr ""
+
+msgid "همه انواع"
+msgstr ""
+
+msgid "هیچ تغییری برای ذخیره وجود ندارد."
+msgstr ""
+
+msgid "هیچ ردیف معتبری برای ذخیره پیدا نشد."
+msgstr ""
+
+msgid "ورود CSV"
+msgstr ""
+
+msgid "ورود CSV و ذخیره گروهی"
+msgstr ""
+
+msgid "وزن"
+msgstr ""
+
+msgid "وضعیت"
+msgstr ""
+
+msgid "وضعیت انتشار"
+msgstr ""
+
+msgid "وضعیت موجودی"
+msgstr ""
+
+msgid "وضعیت:"
+msgstr ""
+
+msgid "ووکامرس فعال نیست"
+msgstr ""
+
+msgid "ویرایش"
+msgstr ""
+
+msgid "ویرایش گروهی پست تایپ ها"
+msgstr ""
+
+msgid "ویرایش گروهی پست تایپ ها - %s"
+msgstr ""
+
+msgid "ویرایش گروهی پست‌ها"
+msgstr ""
+
+msgid "ویرایشگر گروهی"
+msgstr ""
+
+msgid "ویژگی‌ها"
+msgstr ""
+
+msgid "ویژگی‌های محصول"
+msgstr ""
+
+msgid "ویژگی‌های محصول (Attributes)"
+msgstr ""
+
+msgid "پاک کردن فیلترها"
+msgstr ""
+
+msgid "پاک کردن همه"
+msgstr ""
+
+msgid "پست یافت نشد"
+msgstr ""
+
+msgid "پیدا کن..."
+msgstr ""
+
+msgid "پیش‌نویس"
+msgstr ""
+
+msgid "پیوند یکتا"
+msgstr ""
+
+msgid "پیوند یکتا (URL)"
+msgstr ""
+
+msgid "کلمه کلیدی (Rank Math)"
+msgstr ""
+
+msgid "کلمه کلیدی (SEOPress)"
+msgstr ""
+
+msgid "کلمه کلیدی (Yoast)"
+msgstr ""
+
+msgid "کپی"
+msgstr ""
+
+msgid "کپی نام فایل"
+msgstr ""
+
+msgid "کپی یک مقدار به کل ستون"
+msgstr ""
+
+msgid "گالری"
+msgstr ""
+
+msgid "گالری تصاویر"
+msgstr ""
+
+msgid "یک ستون و مقدار را انتخاب کنید."
+msgstr ""
+
+msgid "یک نوع پست را برای ویرایش گروهی انتخاب کنید. در هر زمان فقط با یک نوع پست می‌توانید کار کنید."
+msgstr ""
+
+
+msgid "کل"
+msgstr ""
+
+msgid "این صفحه"
+msgstr ""
+
+msgid "انتخاب‌شده"
+msgstr ""
+
+msgid "خروجی CSV از همه‌ی ردیف‌های فیلترشده (در تمام صفحات)"
+msgstr ""
+
+msgid "خروجی CSV (همه: %s)"
+msgstr ""
+
+msgid "انتخاب همه‌ی %s مورد در تمام صفحات"
+msgstr ""
+
+msgid "همه‌ی %s مورد (تمام صفحات) انتخاب شدند."
+msgstr ""
+
+msgid "لغو انتخاب"
+msgstr ""
+
+msgid "شماره ردیف"
+msgstr ""
+
+msgid "شناسه پست"
+msgstr ""

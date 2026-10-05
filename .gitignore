@@ -1,0 +1,15 @@
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dependencies / build
+node_modules/
+vendor/
+
+# Logs
+*.log

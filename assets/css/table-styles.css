@@ -1,0 +1,826 @@
+/* =============================================================
+   BULK EDIT SEO MANAGER — Table Styles
+   Minimal refresh · RTL/Persian · CSS-only
+   IMPORTANT: do NOT add overflow / transform / filter to
+   .besm-row-scroll-container or .besm-header-scroll-container
+   — the JS syncs their scrollLeft; no new stacking contexts.
+   All rules scoped to .besm-wrap
+   ============================================================= */
+
+/* ── Table container ──────────────────────────────────────── */
+.besm-wrap .besm-table-wrap {
+  position: relative;
+  overflow: visible;
+  background: var(--besm-surface);
+  border-radius: 0 0 var(--besm-radius-xl) var(--besm-radius-xl);
+}
+
+/* ── Edit table ───────────────────────────────────────────── */
+.besm-wrap .besm-edit-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+  table-layout: fixed;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   STICKY THEAD  (vertical only)
+   z-index: var(--besm-z-sticky) = 200
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-edit-table thead {
+  position: sticky;
+  top: 32px;
+  z-index: var(--besm-z-sticky);
+  background: var(--besm-surface-2);
+  box-shadow: 0 1px 0 var(--besm-border);
+}
+
+.besm-wrap .besm-edit-table thead th {
+  padding: 10px 10px;
+  text-align: start;
+  font-weight: 600;
+  color: var(--besm-text-muted);
+  border-block-end: 1px solid var(--besm-border);
+  white-space: nowrap;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--besm-surface-2);
+  vertical-align: middle;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   CHECKBOX COLUMN — only sticky column
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-edit-table thead th:first-child {
+  position: sticky;
+  inset-inline-end: 0;
+  z-index: calc(var(--besm-z-sticky) + 10);
+  width: 44px;
+  min-width: 44px;
+  max-width: 44px;
+  background: var(--besm-surface-2);
+  box-shadow: -2px 0 4px rgba(0,0,0,.04);
+}
+
+.besm-wrap .besm-edit-table tbody td:first-child {
+  position: sticky;
+  inset-inline-end: 0;
+  z-index: 10;
+  width: 44px;
+  min-width: 44px;
+  max-width: 44px;
+  background: var(--besm-surface);
+  box-shadow: -2px 0 4px rgba(0,0,0,.04);
+  text-align: center;
+  padding: 10px;
+}
+
+.besm-wrap .besm-edit-table tbody tr:hover td:first-child {
+  background: var(--besm-surface-2);
+}
+
+.besm-wrap .besm-checkbox-cell input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--besm-accent);
+  border-radius: 3px;
+}
+
+.besm-wrap .besm-checkbox-cell input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SCROLLABLE CONTENT COLUMN (2nd th / td)
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-edit-table thead th:nth-child(2) {
+  width: auto;
+  min-width: 100%;
+  padding: 0;
+  overflow: hidden;
+}
+
+.besm-wrap .besm-edit-table tbody td:nth-child(2) {
+  padding: 0;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   HEADER SCROLL CONTAINER
+   NOTE: no overflow on this element — it is overflow-x: auto
+   but NO position/transform/filter that creates a stacking ctx.
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-header-scroll-container {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--besm-border-strong) var(--besm-surface-2);
+  gap: 0;
+  min-height: 42px;
+}
+
+.besm-wrap .besm-header-scroll-container::-webkit-scrollbar {
+  height: 4px;
+}
+
+.besm-wrap .besm-header-scroll-container::-webkit-scrollbar-track {
+  background: var(--besm-surface-2);
+}
+
+.besm-wrap .besm-header-scroll-container::-webkit-scrollbar-thumb {
+  background: var(--besm-border-strong);
+  border-radius: 2px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   HEADER CELLS
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-header-cell {
+  flex: 0 0 auto;
+  min-width: 150px;
+  padding: 10px 10px;
+  border-inline-start: 1px solid var(--besm-border);
+  font-weight: 600;
+  color: var(--besm-text-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  background: var(--besm-surface-2);
+  display: flex;
+  align-items: center;
+}
+
+.besm-wrap .besm-header-cell:first-child {
+  border-inline-start: none;
+}
+
+/* Field-specific widths */
+.besm-wrap .besm-header-cell[data-field="id"]           { min-width: 110px; }
+.besm-wrap .besm-header-cell[data-field="title"]        { min-width: 240px; }
+.besm-wrap .besm-header-cell[data-field="slug"]         { min-width: 190px; }
+.besm-wrap .besm-header-cell[data-field="content"],
+.besm-wrap .besm-header-cell[data-field="excerpt"],
+.besm-wrap .besm-header-cell[data-field="description"],
+.besm-wrap .besm-header-cell[data-field="short_description"] { min-width: 280px; }
+.besm-wrap .besm-header-cell[data-field="featured_image"] { min-width: 140px; }
+.besm-wrap .besm-header-cell[data-field="gallery"]      { min-width: 240px; }
+.besm-wrap .besm-header-cell[data-field="sku"],
+.besm-wrap .besm-header-cell[data-field="regular_price"],
+.besm-wrap .besm-header-cell[data-field="sale_price"],
+.besm-wrap .besm-header-cell[data-field="stock_quantity"] { min-width: 110px; }
+
+/* ─────────────────────────────────────────────────────────────
+   ROW SCROLL CONTAINER
+   NOTE: same constraint — no new stacking context.
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-row-scroll-container {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--besm-border-strong) var(--besm-surface-2);
+  gap: 0;
+  width: 100%;
+  min-height: 52px;
+}
+
+.besm-wrap .besm-row-scroll-container::-webkit-scrollbar {
+  height: 5px;
+}
+
+.besm-wrap .besm-row-scroll-container::-webkit-scrollbar-track {
+  background: var(--besm-surface-2);
+  border-radius: 3px;
+}
+
+.besm-wrap .besm-row-scroll-container::-webkit-scrollbar-thumb {
+  background: var(--besm-border-strong);
+  border-radius: 3px;
+}
+
+.besm-wrap .besm-row-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: var(--besm-text-faint);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   FIELD CELLS
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-field-cell {
+  flex: 0 0 auto;
+  min-width: 150px;
+  padding: 8px 10px;
+  border-inline-start: 1px solid var(--besm-border);
+  display: flex;
+  align-items: center;
+}
+
+.besm-wrap .besm-field-cell:first-child {
+  border-inline-start: none;
+}
+
+/* Field-specific widths — match header */
+.besm-wrap .besm-field-cell[data-field="id"]           { min-width: 110px; }
+.besm-wrap .besm-field-cell[data-field="title"]        { min-width: 240px; }
+.besm-wrap .besm-field-cell[data-field="slug"]         { min-width: 190px; }
+.besm-wrap .besm-field-cell[data-field="content"],
+.besm-wrap .besm-field-cell[data-field="excerpt"],
+.besm-wrap .besm-field-cell[data-field="description"],
+.besm-wrap .besm-field-cell[data-field="short_description"] { min-width: 280px; }
+.besm-wrap .besm-field-cell[data-field="featured_image"] { min-width: 140px; }
+.besm-wrap .besm-field-cell[data-field="gallery"]      { min-width: 240px; }
+.besm-wrap .besm-field-cell[data-field="sku"],
+.besm-wrap .besm-field-cell[data-field="regular_price"],
+.besm-wrap .besm-field-cell[data-field="sale_price"],
+.besm-wrap .besm-field-cell[data-field="stock_quantity"] { min-width: 110px; }
+
+/* ─────────────────────────────────────────────────────────────
+   ROW STYLES
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-edit-table tbody tr {
+  border-block-end: 1px solid var(--besm-border);
+  transition: background var(--besm-t);
+}
+
+.besm-wrap .besm-edit-table tbody tr:last-child {
+  border-block-end: none;
+}
+
+.besm-wrap .besm-edit-table tbody tr:hover {
+  background: var(--besm-surface-2);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   INPUT FIELDS inside cells
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-field-cell input[type="text"],
+.besm-wrap .besm-field-cell input[type="number"],
+.besm-wrap .besm-field-cell textarea,
+.besm-wrap .besm-field-cell select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius);
+  font-size: 13px;
+  color: var(--besm-text);
+  background: var(--besm-surface);
+  transition: border-color var(--besm-t), box-shadow var(--besm-t);
+  font-family: var(--besm-font);
+  direction: rtl;
+  font-variant-numeric: tabular-nums;
+}
+
+.besm-wrap .besm-field-cell input[type="number"] {
+  font-variant-numeric: tabular-nums;
+}
+
+.besm-wrap .besm-field-cell input:hover,
+.besm-wrap .besm-field-cell textarea:hover,
+.besm-wrap .besm-field-cell select:hover {
+  border-color: var(--besm-border-strong);
+}
+
+.besm-wrap .besm-field-cell input:focus,
+.besm-wrap .besm-field-cell textarea:focus,
+.besm-wrap .besm-field-cell select:focus {
+  outline: none;
+  border-color: var(--besm-accent);
+  box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+}
+
+.besm-wrap .besm-field-cell input:focus-visible,
+.besm-wrap .besm-field-cell textarea:focus-visible,
+.besm-wrap .besm-field-cell select:focus-visible {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: 0;
+}
+
+.besm-wrap .besm-field-cell textarea {
+  min-height: 56px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   ID CELL
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-id-display,
+.besm-wrap .besm-id-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--besm-sp-2);
+  width: 100%;
+}
+
+.besm-wrap .besm-post-id {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--besm-text-2);
+  font-variant-numeric: tabular-nums;
+  font-family: var(--besm-font-mono);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   IMAGE FIELD
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-image-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--besm-sp-2);
+  width: 100%;
+}
+
+.besm-wrap .besm-image-preview {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border: 1px dashed var(--besm-border-strong);
+  border-radius: var(--besm-radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color var(--besm-t), box-shadow var(--besm-t);
+  background: var(--besm-surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.besm-wrap .besm-image-preview:hover {
+  border-color: var(--besm-accent);
+  box-shadow: var(--besm-shadow-xs);
+}
+
+.besm-wrap .besm-image-preview:focus-visible {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: 2px;
+}
+
+.besm-wrap .besm-image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.besm-wrap .besm-image-preview.no-image .dashicons {
+  font-size: 28px;
+  color: var(--besm-surface-3);
+}
+
+.besm-wrap .besm-image-remove {
+  position: absolute;
+  top: 3px;
+  inset-inline-start: 3px;
+  background: var(--besm-error);
+  color: #fff;
+  border: none;
+  border-radius: var(--besm-radius-sm);
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--besm-t), background var(--besm-t);
+  z-index: 10;
+}
+
+.besm-wrap .besm-image-preview:hover .besm-image-remove {
+  opacity: 1;
+}
+
+.besm-wrap .besm-image-remove:hover {
+  background: #b91c1c;
+}
+
+.besm-wrap .besm-image-remove:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 1px;
+  opacity: 1;
+}
+
+.besm-wrap .besm-alt-input {
+  width: 100%;
+}
+
+.besm-wrap .besm-alt-input input {
+  width: 100%;
+  padding: 5px 7px;
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius-sm);
+  font-size: 11px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   GALLERY FIELD
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-gallery-field {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--besm-sp-2);
+  width: 100%;
+  min-height: 72px;
+  align-items: flex-start;
+}
+
+.besm-wrap .besm-gallery-item {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius);
+  overflow: hidden;
+}
+
+.besm-wrap .besm-gallery-item.besm-image-preview {
+  width: 56px;
+  height: 56px;
+  cursor: default;
+}
+
+.besm-wrap .besm-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.besm-wrap .besm-gallery-add {
+  width: 56px;
+  height: 56px;
+  border: 1px dashed var(--besm-border-strong);
+  border-radius: var(--besm-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: var(--besm-surface-2);
+  transition: border-color var(--besm-t), background var(--besm-t);
+  flex-shrink: 0;
+}
+
+.besm-wrap .besm-gallery-add:hover {
+  border-color: var(--besm-accent);
+  background: var(--besm-accent-subtle);
+}
+
+.besm-wrap .besm-gallery-add:focus-visible {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: 2px;
+}
+
+.besm-wrap .besm-gallery-add .dashicons {
+  font-size: 20px;
+  color: var(--besm-text-faint);
+  transition: color var(--besm-t);
+}
+
+.besm-wrap .besm-gallery-add:hover .dashicons {
+  color: var(--besm-accent);
+}
+
+/* Gallery remove button */
+.besm-wrap .besm-gallery-item .besm-image-remove {
+  top: 2px;
+  inset-inline-start: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--besm-radius-sm);
+}
+
+.besm-wrap .besm-gallery-item .besm-image-remove .dashicons {
+  font-size: 12px;
+  width: 12px;
+  height: 12px;
+}
+
+/* Gallery item wrapper */
+.besm-wrap .besm-gallery-item-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   IMAGE FILENAME DISPLAY
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-image-filename {
+  display: flex;
+  align-items: center;
+  gap: var(--besm-sp-1);
+  padding: 4px 6px;
+  background: var(--besm-surface-2);
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius-sm);
+  margin-block-start: var(--besm-sp-2);
+  font-size: 11px;
+  color: var(--besm-text-muted);
+}
+
+.besm-wrap .besm-image-filename .dashicons {
+  font-size: 12px;
+  width: 12px;
+  height: 12px;
+  color: var(--besm-text-faint);
+  flex-shrink: 0;
+}
+
+.besm-wrap .besm-filename-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--besm-font-mono);
+  font-size: 10px;
+  user-select: all;
+}
+
+.besm-wrap .besm-copy-filename {
+  padding: 3px 5px;
+  background: var(--besm-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--besm-radius-sm);
+  cursor: pointer;
+  transition: background var(--besm-t);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.besm-wrap .besm-copy-filename .dashicons {
+  font-size: 10px;
+  width: 10px;
+  height: 10px;
+  color: #fff;
+}
+
+.besm-wrap .besm-copy-filename:hover {
+  background: var(--besm-accent-hover);
+}
+
+.besm-wrap .besm-copy-filename:focus-visible {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: 2px;
+}
+
+.besm-wrap .besm-copy-filename.copied {
+  background: var(--besm-success);
+}
+
+/* Gallery filename */
+.besm-wrap .besm-gallery-filename {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 5px;
+  background: var(--besm-surface-2);
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius-sm);
+  font-size: 9px;
+  color: var(--besm-text-muted);
+  width: 56px;
+}
+
+.besm-wrap .besm-gallery-filename .besm-filename-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--besm-font-mono);
+  font-size: 8px;
+  user-select: all;
+}
+
+.besm-wrap .besm-gallery-filename .besm-copy-filename {
+  padding: 2px 3px;
+  min-width: 16px;
+  height: 16px;
+}
+
+.besm-wrap .besm-image-filename:hover,
+.besm-wrap .besm-gallery-filename:hover {
+  background: var(--besm-surface-3);
+  border-color: var(--besm-border-strong);
+}
+
+.besm-wrap .besm-filename-text[title] {
+  cursor: help;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   VARIATIONS
+   ───────────────────────────────────────────────────────────── */
+/* Parent row with variations — subtle inline-end indicator */
+.besm-wrap .besm-main-row.has-variations {
+  border-inline-end: 3px solid var(--besm-accent-muted);
+}
+
+.besm-wrap .besm-main-row.has-variations:hover {
+  border-inline-end-color: var(--besm-accent);
+}
+
+/* Toggle button */
+.besm-wrap .besm-toggle-variations {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: var(--besm-accent-subtle);
+  color: var(--besm-accent);
+  border: 1px solid var(--besm-accent-muted);
+  border-radius: var(--besm-radius);
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  transition: background var(--besm-t), border-color var(--besm-t), color var(--besm-t);
+  box-shadow: none;
+  margin-block-start: var(--besm-sp-2);
+  font-family: var(--besm-font);
+}
+
+.besm-wrap .besm-toggle-variations:hover {
+  background: var(--besm-accent-muted);
+  color: var(--besm-accent-hover);
+  border-color: var(--besm-accent);
+}
+
+.besm-wrap .besm-toggle-variations:focus-visible {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: 2px;
+}
+
+.besm-wrap .besm-toggle-variations .dashicons {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+  transition: transform var(--besm-t-med);
+}
+
+.besm-wrap .besm-toggle-variations.active {
+  background: var(--besm-success-bg);
+  color: var(--besm-success);
+  border-color: var(--besm-success-border);
+}
+
+.besm-wrap .besm-toggle-variations.active .dashicons {
+  transform: rotate(180deg);
+}
+
+.besm-wrap .besm-variations-count {
+  font-size: 10px;
+  background: rgba(37,99,235,.12);
+  padding: 1px 5px;
+  border-radius: var(--besm-radius-full);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Variation row */
+.besm-wrap .besm-variation-row {
+  display: none;
+  background: var(--besm-surface-2);
+  border-inline-end: 2px solid var(--besm-accent-muted);
+  opacity: 0;
+  transition: opacity var(--besm-t-med);
+}
+
+.besm-wrap .besm-variation-row.show {
+  display: table-row;
+  opacity: 1;
+}
+
+.besm-wrap .besm-variation-row:hover {
+  background: var(--besm-surface-3);
+}
+
+.besm-wrap .besm-variation-row td:first-child {
+  background: var(--besm-surface-2);
+}
+
+.besm-wrap .besm-variation-row:hover td:first-child {
+  background: var(--besm-surface-3);
+}
+
+/* Variation indicator */
+.besm-wrap .besm-variation-indicator {
+  color: var(--besm-text-faint);
+  font-size: 14px;
+}
+
+/* Variation ID display */
+.besm-wrap .besm-variation-id-display,
+.besm-wrap .besm-variation-id-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--besm-sp-2);
+  padding: 5px 8px;
+  background: var(--besm-accent-subtle);
+  border-radius: var(--besm-radius);
+  border: 1px solid var(--besm-accent-muted);
+}
+
+.besm-wrap .besm-variation-icon {
+  font-size: 12px;
+  opacity: .6;
+}
+
+.besm-wrap .besm-variation-id {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--besm-accent);
+  font-family: var(--besm-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Variation name */
+.besm-wrap .besm-variation-name-display {
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+}
+
+.besm-wrap .besm-variation-name-display strong {
+  color: var(--besm-text-2);
+  font-weight: 600;
+  font-size: 12px;
+  padding: 5px 10px;
+  background: var(--besm-surface-2);
+  border-radius: var(--besm-radius);
+  border-inline-end: 2px solid var(--besm-accent-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 230px;
+}
+
+/* Variation field inputs — slightly tinted background */
+.besm-wrap .besm-variation-field input,
+.besm-wrap .besm-variation-field textarea,
+.besm-wrap .besm-variation-field select {
+  background: var(--besm-surface);
+  border-color: var(--besm-border);
+}
+
+/* N/A fields */
+.besm-wrap .besm-variation-na {
+  color: var(--besm-text-faint);
+  font-style: italic;
+  font-size: 12px;
+  text-align: center;
+  display: block;
+  padding: 8px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   LOADING STATE
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-loading {
+  pointer-events: none;
+  opacity: .55;
+  position: relative;
+}
+
+.besm-wrap .besm-loading::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,.7);
+  z-index: 999;
+}
+
+/* Loading overlay z-index — keep above WP admin bar */
+.besm-loading-overlay {
+  z-index: var(--besm-z-overlay) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RESPONSIVE
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .besm-wrap .besm-header-scroll-container,
+  .besm-wrap .besm-row-scroll-container {
+    max-width: calc(100vw - 72px);
+  }
+
+  .besm-wrap .besm-edit-table thead th:first-child,
+  .besm-wrap .besm-edit-table tbody td:first-child {
+    width: 36px;
+    min-width: 36px;
+    max-width: 36px;
+  }
+
+  .besm-wrap .besm-variation-name-display strong {
+    max-width: 140px;
+  }
+}

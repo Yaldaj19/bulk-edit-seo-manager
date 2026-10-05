@@ -1,0 +1,1612 @@
+/* =============================================================
+   BULK EDIT SEO MANAGER — Admin Styles
+   Minimal refresh · RTL/Persian · CSS-only
+   All rules scoped to .besm-wrap or .besm-settings-wrap
+   ============================================================= */
+
+/* ── Design Tokens ─────────────────────────────────────────── */
+:root {
+  /* Accent (single) */
+  --besm-accent:          #2563eb;   /* blue-600 */
+  --besm-accent-hover:    #1d4ed8;   /* blue-700 */
+  --besm-accent-subtle:   #eff6ff;   /* blue-50  */
+  --besm-accent-muted:    #bfdbfe;   /* blue-200 */
+
+  /* Surfaces */
+  --besm-bg:              #f8fafc;   /* slate-50  – page bg  */
+  --besm-surface:         #ffffff;   /* white     – card/table */
+  --besm-surface-2:       #f1f5f9;   /* slate-100 – sub-surface */
+  --besm-surface-3:       #e2e8f0;   /* slate-200 – hover bg  */
+
+  /* Borders */
+  --besm-border:          #e5e7eb;   /* gray-200 */
+  --besm-border-strong:   #d1d5db;   /* gray-300 */
+
+  /* Text */
+  --besm-text:            #111827;   /* gray-900 */
+  --besm-text-2:          #374151;   /* gray-700 */
+  --besm-text-muted:      #6b7280;   /* gray-500 */
+  --besm-text-faint:      #9ca3af;   /* gray-400 */
+
+  /* Semantic */
+  --besm-success:         #059669;   /* emerald-600 */
+  --besm-success-bg:      #d1fae5;
+  --besm-success-border:  #34d399;
+  --besm-error:           #dc2626;   /* red-600   */
+  --besm-error-bg:        #fee2e2;
+  --besm-error-border:    #f87171;
+  --besm-warn:            #d97706;
+  --besm-warn-bg:         #fef3c7;
+
+  /* Radius scale */
+  --besm-radius-sm:       4px;
+  --besm-radius:          6px;
+  --besm-radius-md:       8px;
+  --besm-radius-lg:       10px;
+  --besm-radius-xl:       12px;
+  --besm-radius-full:     9999px;
+
+  /* Shadow scale */
+  --besm-shadow-xs:       0 1px 2px rgba(0,0,0,.05);
+  --besm-shadow-sm:       0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+  --besm-shadow-md:       0 4px 6px -1px rgba(0,0,0,.07), 0 2px 4px -1px rgba(0,0,0,.04);
+  --besm-shadow-lg:       0 10px 15px -3px rgba(0,0,0,.08), 0 4px 6px -2px rgba(0,0,0,.04);
+
+  /* Spacing */
+  --besm-sp-1:  4px;
+  --besm-sp-2:  8px;
+  --besm-sp-3:  12px;
+  --besm-sp-4:  16px;
+  --besm-sp-5:  20px;
+  --besm-sp-6:  24px;
+  --besm-sp-8:  32px;
+
+  /* Typography */
+  --besm-font:  -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                'Helvetica Neue', Arial, sans-serif;
+  --besm-font-mono: ui-monospace, 'Cascadia Mono', 'Segoe UI Mono',
+                    'Courier New', monospace;
+
+  /* Z-index scale (all below WP chrome: adminbar=99999, menu=9990) */
+  --besm-z-sticky:   200;
+  --besm-z-bulk-bar: 300;
+  --besm-z-fab:      500;
+  --besm-z-toast:    9700;
+  --besm-z-overlay:  9800;
+
+  /* Transition */
+  --besm-t:     150ms ease;
+  --besm-t-med: 200ms ease;
+}
+
+/* ── Base reset inside plugin wrappers ──────────────────────── */
+.besm-wrap,
+.besm-settings-wrap {
+  direction: rtl;
+  font-family: var(--besm-font);
+  color: var(--besm-text);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   EDITOR PAGE — Page header
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-page-header {
+  margin-block-end: var(--besm-sp-4);
+}
+
+.besm-wrap .besm-page-header h1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--besm-text);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   HELP BOX (accordion)
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-help-box {
+  background: var(--besm-surface);
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius-lg);
+  margin-block-end: var(--besm-sp-4);
+  overflow: hidden;
+  box-shadow: var(--besm-shadow-xs);
+}
+
+.besm-wrap .besm-help-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--besm-sp-2);
+  justify-content: center;
+  width: 100%;
+  padding: var(--besm-sp-3) var(--besm-sp-4);
+  background: var(--besm-surface);
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--besm-text-muted);
+  cursor: pointer;
+  transition: background var(--besm-t), color var(--besm-t);
+  font-family: var(--besm-font);
+}
+
+.besm-wrap .besm-help-toggle:hover {
+  background: var(--besm-surface-2);
+  color: var(--besm-text-2);
+}
+
+.besm-wrap .besm-help-toggle:focus-visible {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: -2px;
+}
+
+/* RTL: chevron points to the left by default; rotate down when open */
+.besm-wrap .besm-help-toggle .dashicons-arrow-down-alt2 {
+  transition: transform var(--besm-t-med);
+  margin-inline-start: auto;
+}
+
+.besm-wrap .besm-help-toggle.active .dashicons-arrow-down-alt2 {
+  transform: rotate(180deg);
+}
+
+.besm-wrap .besm-help-content {
+  border-block-start: 1px solid var(--besm-border);
+  padding: var(--besm-sp-4);
+}
+
+.besm-wrap .besm-help-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--besm-sp-4);
+}
+
+.besm-wrap .besm-help-section {
+  background: var(--besm-surface-2);
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius);
+  padding: var(--besm-sp-4);
+}
+
+.besm-wrap .besm-help-section h3 {
+  margin: 0 0 var(--besm-sp-2) 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--besm-text-2);
+}
+
+.besm-wrap .besm-help-section ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.besm-wrap .besm-help-section li {
+  margin-block-end: var(--besm-sp-2);
+  font-size: 12px;
+  color: var(--besm-text-muted);
+  line-height: 1.6;
+  padding-inline-start: var(--besm-sp-3);
+  position: relative;
+}
+
+.besm-wrap .besm-help-section li::before {
+  content: '–';
+  position: absolute;
+  inset-inline-start: 0;
+  color: var(--besm-text-faint);
+}
+
+.besm-wrap .besm-help-section li strong {
+  color: var(--besm-text-2);
+  font-weight: 600;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   FILTERS CONTAINER
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-filters-container {
+  background: var(--besm-surface);
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius-lg);
+  padding: var(--besm-sp-4);
+  margin-block-end: var(--besm-sp-4);
+  box-shadow: var(--besm-shadow-xs);
+}
+
+.besm-wrap .besm-filters-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--besm-sp-3);
+  margin-block-end: var(--besm-sp-3);
+}
+
+.besm-wrap .besm-filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--besm-sp-1);
+}
+
+.besm-wrap .besm-filter-label {
+  display: flex;
+  align-items: center;
+  gap: var(--besm-sp-1);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--besm-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.besm-wrap .besm-filter-input,
+.besm-wrap .besm-filter-select {
+  padding: 8px 10px;
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius);
+  font-size: 13px;
+  color: var(--besm-text);
+  background: var(--besm-surface);
+  transition: border-color var(--besm-t), box-shadow var(--besm-t);
+  font-family: var(--besm-font);
+  direction: rtl;
+}
+
+.besm-wrap .besm-filter-input:hover,
+.besm-wrap .besm-filter-select:hover {
+  border-color: var(--besm-border-strong);
+}
+
+.besm-wrap .besm-filter-input:focus,
+.besm-wrap .besm-filter-select:focus {
+  outline: none;
+  border-color: var(--besm-accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+}
+
+.besm-wrap .besm-filter-input:focus-visible,
+.besm-wrap .besm-filter-select:focus-visible {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: 0;
+}
+
+/* Advanced toggle */
+.besm-wrap .besm-toggle-advanced {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--besm-sp-2);
+  padding: 8px var(--besm-sp-4);
+  background: var(--besm-surface);
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--besm-text-muted);
+  cursor: pointer;
+  transition: background var(--besm-t), border-color var(--besm-t), color var(--besm-t);
+  width: 100%;
+  font-family: var(--besm-font);
+}
+
+.besm-wrap .besm-toggle-advanced:hover {
+  background: var(--besm-surface-2);
+  border-color: var(--besm-border-strong);
+  color: var(--besm-text-2);
+}
+
+.besm-wrap .besm-toggle-advanced:focus-visible {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: 2px;
+}
+
+.besm-wrap .besm-toggle-advanced .dashicons-arrow-down-alt2 {
+  transition: transform var(--besm-t-med);
+}
+
+.besm-wrap .besm-toggle-advanced.active .dashicons-arrow-down-alt2 {
+  transform: rotate(180deg);
+}
+
+/* has-values indicator: replace animation with a static dot for less noise */
+.besm-wrap .besm-toggle-advanced.has-values {
+  background: var(--besm-accent-subtle);
+  border-color: var(--besm-accent-muted);
+  color: var(--besm-accent);
+}
+
+.besm-wrap .besm-toggle-advanced.has-values::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: var(--besm-accent);
+  border-radius: var(--besm-radius-full);
+  margin-inline-end: var(--besm-sp-1);
+  /* no pulse animation — reduced noise */
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .besm-wrap .besm-toggle-advanced.has-values::before {
+    animation: besm-pulse 2s ease-in-out infinite;
+  }
+}
+
+@keyframes besm-pulse {
+  0%, 100% { opacity: 1; transform: scale(1);   }
+  50%       { opacity: .5; transform: scale(1.25); }
+}
+
+/* Advanced section */
+.besm-wrap .besm-advanced-section {
+  margin-block-end: var(--besm-sp-4);
+  padding: var(--besm-sp-4);
+  background: var(--besm-surface-2);
+  border-radius: var(--besm-radius);
+  border: 1px solid var(--besm-border);
+}
+
+.besm-wrap .besm-advanced-section:last-child {
+  margin-block-end: 0;
+}
+
+.besm-wrap .besm-advanced-section h4 {
+  margin: 0 0 var(--besm-sp-3) 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--besm-text-2);
+  display: flex;
+  align-items: center;
+  gap: var(--besm-sp-2);
+}
+
+.besm-wrap .besm-advanced-section h4 .dashicons {
+  color: var(--besm-accent);
+  font-size: 16px;
+}
+
+/* Active filters */
+.besm-wrap .besm-active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--besm-sp-2);
+  padding: var(--besm-sp-3) var(--besm-sp-4);
+  background: var(--besm-accent-subtle);
+  border: 1px solid var(--besm-accent-muted);
+  border-radius: var(--besm-radius-md);
+  margin-block-end: var(--besm-sp-4);
+}
+
+.besm-wrap .besm-filter-badge-label {
+  display: flex;
+  align-items: center;
+  gap: var(--besm-sp-1);
+  font-weight: 600;
+  color: var(--besm-accent);
+  font-size: 12px;
+}
+
+.besm-wrap .besm-filter-badge-label .dashicons {
+  font-size: 15px;
+}
+
+.besm-wrap .besm-filter-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--besm-sp-1);
+  padding: 4px 10px;
+  background: var(--besm-surface);
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius-full);
+  font-size: 12px;
+  color: var(--besm-text-2);
+  transition: border-color var(--besm-t);
+}
+
+.besm-wrap .besm-filter-badge:hover {
+  border-color: var(--besm-accent);
+}
+
+.besm-wrap .besm-filter-badge .dashicons {
+  font-size: 13px;
+  color: var(--besm-text-faint);
+}
+
+.besm-wrap .besm-remove-filter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  background: var(--besm-error);
+  color: #fff;
+  border-radius: var(--besm-radius-full);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  transition: background var(--besm-t);
+  margin-inline-start: var(--besm-sp-1);
+}
+
+.besm-wrap .besm-remove-filter:hover {
+  background: #b91c1c;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   TOOLS BAR (CSV / Find-Replace / Fill-down)
+   Inline styles in view-editor.php are converted to these classes
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-tools-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--besm-sp-3);
+  align-items: flex-end;
+  padding: var(--besm-sp-3) var(--besm-sp-4);
+  background: var(--besm-surface-2);
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius-lg);
+  margin-block-end: var(--besm-sp-4);
+}
+
+.besm-wrap .besm-tool-group {
+  display: flex;
+  gap: var(--besm-sp-2);
+  align-items: center;
+}
+
+/* Column label above tool group inputs */
+.besm-wrap .besm-tool-group-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--besm-sp-1);
+}
+
+.besm-wrap .besm-tool-group-label {
+  font-size: 11px;
+  color: var(--besm-text-muted);
+  font-weight: 500;
+}
+
+.besm-wrap .besm-tool-group-row {
+  display: flex;
+  gap: var(--besm-sp-2);
+  flex-wrap: wrap;
+}
+
+/* Thin divider between tool groups */
+.besm-wrap .besm-tools-divider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--besm-border);
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BUTTONS
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-btn,
+.besm-settings-wrap .besm-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--besm-sp-2);
+  padding: 7px 14px;
+  border-radius: var(--besm-radius);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--besm-t), border-color var(--besm-t),
+              color var(--besm-t), box-shadow var(--besm-t);
+  text-decoration: none;
+  border: 1px solid transparent;
+  font-family: var(--besm-font);
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.besm-wrap .besm-btn:focus-visible,
+.besm-settings-wrap .besm-btn:focus-visible {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: 2px;
+}
+
+.besm-wrap .besm-btn .dashicons,
+.besm-settings-wrap .besm-btn .dashicons {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Primary */
+.besm-wrap .besm-btn-primary,
+.besm-settings-wrap .besm-btn-primary {
+  background: var(--besm-accent);
+  color: #fff;
+  border-color: var(--besm-accent);
+}
+
+.besm-wrap .besm-btn-primary:hover,
+.besm-settings-wrap .besm-btn-primary:hover {
+  background: var(--besm-accent-hover);
+  border-color: var(--besm-accent-hover);
+  color: #fff;
+}
+
+/* Secondary (tonal) */
+.besm-wrap .besm-btn-secondary,
+.besm-settings-wrap .besm-btn-secondary {
+  background: var(--besm-accent-subtle);
+  color: var(--besm-accent);
+  border-color: var(--besm-accent-muted);
+}
+
+.besm-wrap .besm-btn-secondary:hover,
+.besm-settings-wrap .besm-btn-secondary:hover {
+  background: var(--besm-accent-muted);
+  color: var(--besm-accent-hover);
+}
+
+/* Ghost */
+.besm-wrap .besm-btn-ghost,
+.besm-settings-wrap .besm-btn-ghost {
+  background: var(--besm-surface);
+  color: var(--besm-text-2);
+  border-color: var(--besm-border);
+}
+
+.besm-wrap .besm-btn-ghost:hover,
+.besm-settings-wrap .besm-btn-ghost:hover {
+  background: var(--besm-surface-2);
+  border-color: var(--besm-border-strong);
+  color: var(--besm-text);
+}
+
+/* Small variant */
+.besm-wrap .besm-btn-small,
+.besm-settings-wrap .besm-btn-small {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+.besm-wrap .besm-btn-small .dashicons,
+.besm-settings-wrap .besm-btn-small .dashicons {
+  font-size: 13px;
+  width: 13px;
+  height: 13px;
+}
+
+/* Link button */
+.besm-wrap .besm-btn-link,
+.besm-settings-wrap .besm-btn-link {
+  background: none;
+  border: none;
+  color: var(--besm-accent);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-size: 12px;
+  font-family: var(--besm-font);
+  transition: color var(--besm-t);
+}
+
+.besm-wrap .besm-btn-link:hover,
+.besm-settings-wrap .besm-btn-link:hover {
+  color: var(--besm-accent-hover);
+}
+
+.besm-wrap .besm-btn-link:focus-visible,
+.besm-settings-wrap .besm-btn-link:focus-visible {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: 2px;
+}
+
+/* Disabled state */
+.besm-wrap .besm-btn:disabled,
+.besm-settings-wrap .besm-btn:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   EDITOR WRAPPER
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-editor-wrap {
+  background: var(--besm-surface);
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius-xl);
+  box-shadow: var(--besm-shadow-sm);
+  overflow: hidden;
+}
+
+/* Editor header – stripped to neutral bar */
+.besm-wrap .besm-editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--besm-sp-3) var(--besm-sp-4);
+  background: var(--besm-surface-2);
+  border-block-end: 1px solid var(--besm-border);
+}
+
+.besm-wrap .besm-editor-header h2 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--besm-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.besm-wrap .besm-editor-actions {
+  display: flex;
+  gap: var(--besm-sp-2);
+}
+
+/* Header-scoped button overrides — same token, no gradient */
+.besm-wrap .besm-editor-actions .besm-btn {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BULK ACTIONS BAR
+   z-index: --besm-z-bulk-bar
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-bulk-actions-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--besm-sp-2) var(--besm-sp-4);
+  background: var(--besm-surface-2);
+  border-block-end: 1px solid var(--besm-border);
+  position: sticky;
+  top: 32px;
+  z-index: var(--besm-z-bulk-bar);
+}
+
+.besm-wrap .besm-bulk-select {
+  display: flex;
+  align-items: center;
+  gap: var(--besm-sp-4);
+}
+
+.besm-wrap .besm-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: var(--besm-sp-2);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--besm-text-2);
+  user-select: none;
+}
+
+.besm-wrap .besm-checkbox-label input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: 2px;
+}
+
+.besm-wrap .besm-selected-count {
+  color: var(--besm-accent);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.besm-wrap .besm-bulk-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--besm-sp-2);
+}
+
+.besm-wrap .besm-bulk-actions select {
+  padding: 6px 10px;
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius);
+  font-size: 13px;
+  background: var(--besm-surface);
+  color: var(--besm-text);
+  cursor: pointer;
+  transition: border-color var(--besm-t);
+}
+
+.besm-wrap .besm-bulk-actions select:focus-visible {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PAGINATION
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--besm-sp-3) var(--besm-sp-4);
+  background: var(--besm-surface-2);
+  border-block-start: 1px solid var(--besm-border);
+}
+
+.besm-wrap .besm-pagination-info {
+  color: var(--besm-text-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.besm-wrap .besm-pagination-links {
+  display: flex;
+  gap: var(--besm-sp-1);
+}
+
+.besm-wrap .besm-pagination-links a,
+.besm-wrap .besm-pagination-links span {
+  padding: 5px 10px;
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius);
+  text-decoration: none;
+  color: var(--besm-text-2);
+  background: var(--besm-surface);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  transition: background var(--besm-t), border-color var(--besm-t);
+}
+
+.besm-wrap .besm-pagination-links a:hover {
+  background: var(--besm-surface-2);
+  border-color: var(--besm-border-strong);
+}
+
+.besm-wrap .besm-pagination-links a:focus-visible {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: 2px;
+}
+
+.besm-wrap .besm-pagination-links span.current {
+  background: var(--besm-accent);
+  color: #fff;
+  border-color: var(--besm-accent);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   NOTICES / TOASTS
+   z-index: --besm-z-toast
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-notice {
+  padding: var(--besm-sp-3) var(--besm-sp-4);
+  margin-block: var(--besm-sp-3);
+  border-radius: var(--besm-radius-md);
+  border-inline-end: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: var(--besm-sp-3);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.besm-wrap .besm-notice.success {
+  background: var(--besm-success-bg);
+  border-inline-end-color: var(--besm-success);
+  color: #065f46;
+}
+
+.besm-wrap .besm-notice.error {
+  background: var(--besm-error-bg);
+  border-inline-end-color: var(--besm-error);
+  color: #991b1b;
+}
+
+/* Filter notification */
+.besm-wrap .besm-filter-notification {
+  display: flex;
+  align-items: center;
+  gap: var(--besm-sp-3);
+  padding: var(--besm-sp-2) var(--besm-sp-4);
+  margin-block-end: var(--besm-sp-4);
+  border-radius: var(--besm-radius-md);
+  font-size: 13px;
+  border-inline-end: 3px solid transparent;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .besm-wrap .besm-filter-notification {
+    animation: besm-slide-down 200ms ease;
+  }
+}
+
+@keyframes besm-slide-down {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.besm-wrap .besm-filter-notification.besm-filter-success {
+  background: var(--besm-success-bg);
+  border-inline-end-color: var(--besm-success);
+  color: #065f46;
+}
+
+.besm-wrap .besm-filter-notification.besm-filter-error {
+  background: var(--besm-error-bg);
+  border-inline-end-color: var(--besm-error);
+  color: #991b1b;
+}
+
+.besm-wrap .besm-filter-notification .dashicons {
+  flex-shrink: 0;
+  font-size: 18px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   FLOATING ACTION BUTTON (FAB)
+   z-index: --besm-z-fab
+   RTL: fixed to bottom-inline-start (left in RTL = screen right)
+   ───────────────────────────────────────────────────────────── */
+.besm-fab {
+  position: fixed;
+  bottom: 24px;
+  inset-inline-start: 24px;
+  z-index: var(--besm-z-fab);
+  transition: transform var(--besm-t-med), opacity var(--besm-t-med);
+}
+
+.besm-fab-button {
+  display: flex;
+  align-items: center;
+  gap: var(--besm-sp-2);
+  padding: 12px 20px;
+  background: var(--besm-surface-3);
+  color: var(--besm-text-muted);
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius-full);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: not-allowed;
+  box-shadow: var(--besm-shadow-md);
+  transition: background var(--besm-t-med), box-shadow var(--besm-t-med),
+              border-color var(--besm-t-med), color var(--besm-t-med);
+  opacity: .5;
+  font-family: var(--besm-font);
+}
+
+.besm-fab-button .dashicons {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* Active state */
+.besm-fab.has-changes .besm-fab-button {
+  background: var(--besm-success);
+  color: #fff;
+  border-color: var(--besm-success);
+  cursor: pointer;
+  opacity: 1;
+  box-shadow: var(--besm-shadow-lg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .besm-fab.has-changes .besm-fab-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px -4px rgba(5, 150, 105, .35);
+  }
+}
+
+.besm-fab-button:focus-visible {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: 3px;
+}
+
+/* Badge */
+.besm-fab-badge {
+  position: absolute;
+  top: -6px;
+  inset-inline-start: -6px;
+  min-width: 22px;
+  height: 22px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: var(--besm-error);
+  color: #fff;
+  border-radius: var(--besm-radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 0 5px;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, .3);
+  font-variant-numeric: tabular-nums;
+}
+
+.besm-fab.has-changes .besm-fab-badge {
+  display: flex;
+}
+
+/* Saving state */
+.besm-fab.saving .besm-fab-button {
+  background: var(--besm-accent);
+  color: #fff;
+  border-color: var(--besm-accent);
+  cursor: wait;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .besm-fab.saving .besm-fab-button .dashicons {
+    animation: besm-spin 1s linear infinite;
+  }
+}
+
+/* Success state */
+.besm-fab.success .besm-fab-button {
+  background: var(--besm-success);
+  color: #fff;
+  border-color: var(--besm-success);
+}
+
+/* Error state */
+.besm-fab.error .besm-fab-button {
+  background: var(--besm-error);
+  color: #fff;
+  border-color: var(--besm-error);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .besm-fab.error .besm-fab-button {
+    animation: besm-shake .4s ease;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   LOADING OVERLAY
+   z-index: --besm-z-overlay
+   ───────────────────────────────────────────────────────────── */
+.besm-loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, .85);
+  z-index: var(--besm-z-overlay);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.besm-loading-overlay.active {
+  display: flex;
+}
+
+.besm-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--besm-border);
+  border-block-start-color: var(--besm-accent);
+  border-radius: 50%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .besm-loading-spinner {
+    animation: besm-spin .75s linear infinite;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   MULTI-SELECT
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-multi-select {
+  min-height: 80px;
+  padding: var(--besm-sp-2);
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius);
+  font-size: 13px;
+  background: var(--besm-surface);
+  color: var(--besm-text);
+  transition: border-color var(--besm-t);
+}
+
+.besm-wrap .besm-multi-select:focus-visible {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: 0;
+}
+
+.besm-wrap .besm-multi-select option {
+  padding: 5px 8px;
+  margin-block-end: 2px;
+  border-radius: var(--besm-radius-sm);
+  cursor: pointer;
+}
+
+.besm-wrap .besm-multi-select option:checked {
+  background: var(--besm-accent);
+  color: #fff;
+}
+
+.besm-wrap .besm-multi-select-actions {
+  margin-block-start: var(--besm-sp-2);
+  text-align: center;
+  font-size: 11px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BADGES / CHIPS
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-field-type-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  background: var(--besm-surface-3);
+  color: var(--besm-text-muted);
+  border-radius: var(--besm-radius-sm);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  margin-inline-end: var(--besm-sp-2);
+}
+
+.besm-wrap .besm-select-count {
+  display: inline-block;
+  padding: 2px 8px;
+  background: var(--besm-accent);
+  color: #fff;
+  border-radius: var(--besm-radius-full);
+  font-size: 10px;
+  font-weight: 700;
+  margin-inline-end: var(--besm-sp-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.besm-wrap .besm-field-hint {
+  display: block;
+  margin-block-start: var(--besm-sp-1);
+  font-size: 11px;
+  color: var(--besm-text-faint);
+  font-style: italic;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   EMPTY STATE
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-empty-state {
+  text-align: center;
+  padding: 60px var(--besm-sp-5);
+  color: var(--besm-text-faint);
+}
+
+.besm-wrap .besm-empty-state .dashicons {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-block-end: var(--besm-sp-4);
+  color: var(--besm-surface-3);
+  display: block;
+  margin-inline: auto;
+}
+
+.besm-wrap .besm-empty-state h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--besm-text-muted);
+  margin: 0 0 var(--besm-sp-2);
+}
+
+.besm-wrap .besm-empty-state p {
+  font-size: 13px;
+  color: var(--besm-text-faint);
+  margin: 0 0 var(--besm-sp-4);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   FILTER LOADING STATE
+   ───────────────────────────────────────────────────────────── */
+.besm-wrap .besm-filters-form.loading {
+  opacity: .6;
+  pointer-events: none;
+  position: relative;
+}
+
+.besm-wrap .besm-filters-form.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--besm-border);
+  border-block-start-color: var(--besm-accent);
+  border-radius: 50%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .besm-wrap .besm-filters-form.loading::after {
+    animation: besm-spin .75s linear infinite;
+  }
+}
+
+/* Spinner icon utility */
+.dashicons.spin {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dashicons.spin {
+    animation: besm-spin 1s linear infinite;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SHARED ANIMATIONS
+   ───────────────────────────────────────────────────────────── */
+@keyframes besm-spin {
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes besm-shake {
+  0%, 100% { transform: translateX(0);   }
+  25%       { transform: translateX(-6px); }
+  75%       { transform: translateX(6px);  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SETTINGS PAGE
+   All scoped to .besm-settings-wrap
+   ───────────────────────────────────────────────────────────── */
+.besm-settings-wrap {
+  max-width: 1280px;
+  margin: 20px auto;
+  padding-inline: var(--besm-sp-5);
+}
+
+/* Page header */
+.besm-settings-wrap .besm-header {
+  margin-block-end: var(--besm-sp-5);
+  text-align: start;
+}
+
+.besm-settings-wrap .besm-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 var(--besm-sp-1) 0;
+  color: var(--besm-text);
+  line-height: 1.3;
+}
+
+.besm-settings-wrap .besm-subtitle {
+  font-size: 13px;
+  color: var(--besm-text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Settings container */
+.besm-settings-wrap .besm-settings-container {
+  background: var(--besm-surface);
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius-xl);
+  box-shadow: var(--besm-shadow-sm);
+  overflow: hidden;
+}
+
+/* Card */
+.besm-settings-wrap .besm-settings-card {
+  padding: var(--besm-sp-5);
+  border-block-end: 1px solid var(--besm-border);
+}
+
+.besm-settings-wrap .besm-settings-card:last-child {
+  border-block-end: none;
+}
+
+/* Card header */
+.besm-settings-wrap .besm-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--besm-sp-3);
+  margin-block-end: var(--besm-sp-2);
+}
+
+/* Remove emoji icon — it's decorative, keep it small */
+.besm-settings-wrap .besm-card-icon {
+  font-size: 18px;
+  line-height: 1;
+  opacity: .7;
+}
+
+.besm-settings-wrap .besm-card-header h2 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--besm-text);
+}
+
+.besm-settings-wrap .besm-card-description {
+  color: var(--besm-text-muted);
+  margin: 0 0 var(--besm-sp-4) 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Post types grid */
+.besm-settings-wrap .besm-post-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--besm-sp-3);
+}
+
+/* Post type card */
+.besm-settings-wrap .besm-post-type-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--besm-sp-4) var(--besm-sp-4) var(--besm-sp-4) calc(var(--besm-sp-4) + 26px);
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius-md);
+  cursor: pointer;
+  transition: border-color var(--besm-t), background var(--besm-t), box-shadow var(--besm-t);
+  background: var(--besm-surface);
+}
+
+.besm-settings-wrap .besm-post-type-card:hover {
+  border-color: var(--besm-accent);
+  box-shadow: var(--besm-shadow-xs);
+}
+
+.besm-settings-wrap .besm-post-type-card.active {
+  border-color: var(--besm-accent);
+  background: var(--besm-accent-subtle);
+}
+
+.besm-settings-wrap .besm-post-type-card:focus-within {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: 2px;
+}
+
+.besm-settings-wrap .besm-post-type-card input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Custom radio indicator */
+.besm-settings-wrap .besm-radio-custom {
+  position: absolute;
+  top: 50%;
+  inset-inline-end: var(--besm-sp-4);
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--besm-border-strong);
+  border-radius: var(--besm-radius-full);
+  transition: border-color var(--besm-t), background var(--besm-t);
+  background: var(--besm-surface);
+  flex-shrink: 0;
+}
+
+.besm-settings-wrap .besm-post-type-card.active .besm-radio-custom {
+  border-color: var(--besm-accent);
+  background: var(--besm-accent);
+  box-shadow: inset 0 0 0 3px #fff;
+}
+
+.besm-settings-wrap .besm-post-type-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--besm-text);
+  margin-block-end: var(--besm-sp-1);
+  line-height: 1.3;
+}
+
+.besm-settings-wrap .besm-post-type-slug {
+  font-size: 11px;
+  color: var(--besm-text-faint);
+  font-family: var(--besm-font-mono);
+}
+
+/* Fields grid */
+.besm-settings-wrap .besm-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--besm-sp-2);
+}
+
+/* Field card */
+.besm-settings-wrap .besm-field-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--besm-sp-3);
+  padding: var(--besm-sp-3) var(--besm-sp-3);
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius);
+  cursor: pointer;
+  transition: border-color var(--besm-t), background var(--besm-t);
+  background: var(--besm-surface);
+}
+
+.besm-settings-wrap .besm-field-card:hover {
+  border-color: var(--besm-accent);
+}
+
+.besm-settings-wrap .besm-field-card.active {
+  border-color: var(--besm-accent);
+  background: var(--besm-accent-subtle);
+}
+
+.besm-settings-wrap .besm-field-card:focus-within {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: 2px;
+}
+
+.besm-settings-wrap .besm-field-card input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Custom checkbox indicator */
+.besm-settings-wrap .besm-checkbox-custom {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--besm-border-strong);
+  border-radius: var(--besm-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--besm-t), border-color var(--besm-t);
+  background: var(--besm-surface);
+}
+
+.besm-settings-wrap .besm-field-card.active .besm-checkbox-custom {
+  background: var(--besm-accent);
+  border-color: var(--besm-accent);
+}
+
+.besm-settings-wrap .besm-checkbox-custom svg {
+  opacity: 0;
+  transition: opacity var(--besm-t);
+}
+
+.besm-settings-wrap .besm-field-card.active .besm-checkbox-custom svg {
+  opacity: 1;
+}
+
+.besm-settings-wrap .besm-field-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.besm-settings-wrap .besm-field-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--besm-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.besm-settings-wrap .besm-field-type {
+  font-size: 10px;
+  color: var(--besm-text-faint);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+
+/* Display settings */
+.besm-settings-wrap .besm-display-settings {
+  max-width: 360px;
+}
+
+.besm-settings-wrap .besm-setting-item {
+  display: flex;
+  align-items: center;
+  gap: var(--besm-sp-4);
+}
+
+.besm-settings-wrap .besm-setting-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--besm-text-2);
+  white-space: nowrap;
+}
+
+.besm-settings-wrap .besm-select {
+  padding: 7px 12px;
+  border: 1px solid var(--besm-border);
+  border-radius: var(--besm-radius);
+  font-size: 13px;
+  color: var(--besm-text);
+  background: var(--besm-surface);
+  cursor: pointer;
+  transition: border-color var(--besm-t), box-shadow var(--besm-t);
+  font-family: var(--besm-font);
+  font-variant-numeric: tabular-nums;
+}
+
+.besm-settings-wrap .besm-select:hover {
+  border-color: var(--besm-border-strong);
+}
+
+.besm-settings-wrap .besm-select:focus,
+.besm-settings-wrap .besm-select:focus-visible {
+  outline: 2px solid var(--besm-accent);
+  outline-offset: 0;
+  border-color: var(--besm-accent);
+}
+
+/* Settings actions */
+.besm-settings-wrap .besm-settings-actions {
+  display: flex;
+  gap: var(--besm-sp-3);
+  padding: var(--besm-sp-4) var(--besm-sp-5);
+  background: var(--besm-surface-2);
+  border-block-start: 1px solid var(--besm-border);
+}
+
+/* No-fields state */
+.besm-settings-wrap .besm-no-fields {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 48px var(--besm-sp-5);
+  color: var(--besm-text-faint);
+}
+
+.besm-settings-wrap .besm-no-fields .dashicons {
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
+  margin-block-end: var(--besm-sp-3);
+  opacity: .4;
+  display: block;
+  margin-inline: auto;
+}
+
+.besm-settings-wrap .besm-no-fields p {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RESPONSIVE
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .besm-wrap .besm-filters-row {
+    grid-template-columns: 1fr;
+  }
+
+  .besm-wrap .besm-editor-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--besm-sp-2);
+  }
+
+  .besm-wrap .besm-bulk-actions-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--besm-sp-2);
+  }
+
+  .besm-wrap .besm-active-filters {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--besm-sp-3);
+  }
+
+  .besm-wrap .besm-filter-badge {
+    width: 100%;
+    justify-content: space-between;
+    font-size: 11px;
+  }
+
+  .besm-wrap .besm-multi-select-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--besm-sp-2) 0;
+  }
+
+  .besm-wrap .besm-filter-notification {
+    font-size: 12px;
+    padding: var(--besm-sp-2) var(--besm-sp-3);
+  }
+
+  .besm-fab {
+    bottom: 16px;
+    inset-inline-start: 16px;
+  }
+
+  .besm-fab-button {
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+
+  .besm-settings-wrap {
+    padding-inline: var(--besm-sp-3);
+  }
+
+  .besm-settings-wrap .besm-post-types-grid,
+  .besm-settings-wrap .besm-fields-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .besm-settings-wrap .besm-settings-actions {
+    flex-direction: column;
+  }
+
+  .besm-settings-wrap .besm-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── Count chips, row number & select-all-matching (added features) ── */
+.besm-wrap .besm-count-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-block-start: 8px;
+}
+.besm-wrap .besm-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 10px;
+    font-size: 12px;
+    color: var(--besm-text-muted, #6b7280);
+    background: var(--besm-surface-2, #f1f5f9);
+    border: 1px solid var(--besm-border, #e5e7eb);
+    border-radius: 9999px;
+    font-variant-numeric: tabular-nums;
+}
+.besm-wrap .besm-chip strong {
+    color: var(--besm-text, #111827);
+    font-variant-numeric: tabular-nums;
+}
+.besm-wrap .besm-chip-selected {
+    color: var(--besm-accent, #2563eb);
+    background: var(--besm-accent-subtle, #eff6ff);
+    border-color: var(--besm-accent-muted, #bfdbfe);
+}
+.besm-wrap .besm-chip-selected strong { color: var(--besm-accent, #2563eb); }
+
+.besm-wrap .besm-row-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 26px;
+    height: 20px;
+    padding: 0 6px;
+    margin-inline-end: 6px;
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    color: var(--besm-text-muted, #6b7280);
+    background: var(--besm-surface-2, #f1f5f9);
+    border: 1px solid var(--besm-border, #e5e7eb);
+    border-radius: 9999px;
+}
+
+.besm-wrap .besm-select-all-pages-wrap a,
+.besm-wrap .besm-all-pages-selected a {
+    color: var(--besm-accent, #2563eb);
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.besm-wrap .besm-all-pages-selected {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    font-size: 13px;
+    color: var(--besm-accent, #2563eb);
+    background: var(--besm-accent-subtle, #eff6ff);
+    border: 1px solid var(--besm-accent-muted, #bfdbfe);
+    border-radius: 9999px;
+    font-variant-numeric: tabular-nums;
+}
+.besm-wrap .besm-all-pages-selected .dashicons { font-size: 16px; width: 16px; height: 16px; }
+.besm-wrap .besm-select-all-pages-wrap { margin-inline-start: 4px; }

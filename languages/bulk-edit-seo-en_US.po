@@ -1,0 +1,797 @@
+# Bulk Edit SEO Manager - English (en_US)
+msgid ""
+msgstr ""
+"Project-Id-Version: Bulk Edit SEO Manager 1.3.0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: bulk-edit-seo\n"
+
+msgid "%d فیلتر تگزونومی"
+msgstr "%d taxonomy filters"
+
+msgid "%d فیلتر متافیلد"
+msgstr "%d meta-field filters"
+
+msgid "-- انتخاب کنید --"
+msgstr "-- Select --"
+
+msgid "<strong>Alt Text:</strong> متن جایگزین به صورت خودکار از عنوان محصول پر می‌شود"
+msgstr "<strong>Alt Text:</strong> the alternative text is auto-filled from the product title"
+
+msgid "<strong>No Index/Follow:</strong> برای جلوگیری از ایندکس یا فالو لینک‌ها تیک بزنید"
+msgstr "<strong>No Index/Follow:</strong> check these to prevent indexing or following links"
+
+msgid "<strong>Variations:</strong> تغییرات روی Variations بلافاصله روی محصول اصلی تاثیر می‌گذارد"
+msgstr "<strong>Variations:</strong> changes to variations apply to the main product immediately"
+
+msgid "<strong>اسکرول:</strong> هر سطر به صورت مستقل اسکرول افقی دارد"
+msgstr "<strong>Scroll:</strong> each row scrolls horizontally on its own"
+
+msgid "<strong>انتخاب فیلدها:</strong> فیلدهایی که می‌خواهید ویرایش کنید را فعال کنید"
+msgstr "<strong>Choose fields:</strong> enable the fields you want to edit"
+
+msgid "<strong>انتخاب پست‌تایپ:</strong> ابتدا از تنظیمات، نوع پست مورد نظر را انتخاب کنید"
+msgstr "<strong>Choose post type:</strong> first pick the post type you want in Settings"
+
+msgid "<strong>انتخاب گروهی:</strong> با چک‌باکس «انتخاب همه» می‌توانید چند آیتم را همزمان انتخاب کنید"
+msgstr "<strong>Bulk select:</strong> use the “Select all” checkbox to select several items at once"
+
+msgid "<strong>تصاویر:</strong> تصاویر با نام یکسان جایگزین می‌شوند و قدیمی کاملاً حذف می‌شود"
+msgstr "<strong>Images:</strong> images with the same name are replaced and the old one is fully deleted"
+
+msgid "<strong>تصویر Variation:</strong> هر Variation می‌تواند تصویر مخصوص خود را داشته باشد"
+msgstr "<strong>Variation image:</strong> each variation can have its own image"
+
+msgid "<strong>تصویر شاخص:</strong> روی باکس تصویر کلیک کنید تا تصویر جدید انتخاب کنید"
+msgstr "<strong>Featured image:</strong> click the image box to pick a new image"
+
+msgid "<strong>تغییر پست‌تایپ:</strong> برای کار با پست‌تایپ دیگر به تنظیمات بروید"
+msgstr "<strong>Switch post type:</strong> go to Settings to work with another post type"
+
+msgid "<strong>توجه:</strong> جایگزینی و کپی ستون فقط در مرورگر اعمال می‌شوند؛ برای ثبت نهایی حتماً «ذخیره تغییرات» را بزنید"
+msgstr "<strong>Note:</strong> find & replace and fill-down are applied in the browser only; be sure to click “Save changes” to persist them"
+
+msgid "<strong>توضیحات سئو:</strong> Meta Description برای نتایج گوگل"
+msgstr "<strong>SEO description:</strong> Meta Description for Google results"
+
+msgid "<strong>تگزونومی:</strong> فیلتر بر اساس دسته‌بندی و برچسب"
+msgstr "<strong>Taxonomy:</strong> filter by category and tag"
+
+msgid "<strong>جایگزینی خودکار:</strong> تصویر قدیمی با همان نام به طور خودکار حذف و جایگزین می‌شود"
+msgstr "<strong>Auto-replace:</strong> the old image with the same name is automatically deleted and replaced"
+
+msgid "<strong>جستجو:</strong> در عنوان و محتوا جستجو کنید"
+msgstr "<strong>Search:</strong> search in title and content"
+
+msgid "<strong>جست‌وجو و جایگزینی:</strong> در یک ستون مشخص، یک عبارت را در همه‌ی ردیف‌ها پیدا و جایگزین می‌کند"
+msgstr "<strong>Find & replace:</strong> finds and replaces a term across all rows in a chosen column"
+
+msgid "<strong>خروجی CSV:</strong> ردیف‌های فیلترشده‌ی فعلی را با ستون فیلدهای انتخابی دانلود می‌کند (با BOM برای نمایش درست فارسی در Excel)"
+msgstr "<strong>Export CSV:</strong> downloads the currently filtered rows with the selected field columns (with a BOM so Persian displays correctly in Excel)"
+
+msgid "<strong>ذخیره تغییرات:</strong> حتماً پس از ویرایش دکمه ذخیره را بزنید"
+msgstr "<strong>Save changes:</strong> always click Save after editing"
+
+msgid "<strong>ذخیره نهایی:</strong> حتماً دکمه «ذخیره تغییرات» را بزنید"
+msgstr "<strong>Final save:</strong> be sure to click the “Save changes” button"
+
+msgid "<strong>شبکه‌های اجتماعی:</strong> ویرایش عنوان و توضیحات OpenGraph و توییتر (بر اساس پلاگین سئوی فعال)"
+msgstr "<strong>Social networks:</strong> edit OpenGraph and Twitter title and description (based on the active SEO plugin)"
+
+msgid "<strong>عملیات گروهی:</strong> از منوی Bulk Actions برای تغییر وضعیت یا حذف گروهی استفاده کنید"
+msgstr "<strong>Bulk actions:</strong> use the Bulk Actions menu to change status or delete in bulk"
+
+msgid "<strong>عنوان سئو:</strong> عنوان متا را برای موتورهای جستجو تنظیم کنید"
+msgstr "<strong>SEO title:</strong> set the meta title for search engines"
+
+msgid "<strong>فیلتر کردن:</strong> از فیلترها برای یافتن سریع‌تر آیتم‌های خاص استفاده کنید"
+msgstr "<strong>Filtering:</strong> use filters to find specific items faster"
+
+msgid "<strong>قیمت‌گذاری:</strong> قیمت و موجودی هر Variation به صورت مجزا قابل تنظیم است"
+msgstr "<strong>Pricing:</strong> price and stock of each variation can be set independently"
+
+msgid "<strong>متافیلدها:</strong> فیلترهای پیشرفته متافیلدهای سفارشی (دکمه «فیلترهای پیشرفته»)"
+msgstr "<strong>Meta fields:</strong> advanced custom meta-field filters (the “Advanced filters” button)"
+
+msgid "<strong>نمایش Variations:</strong> روی دکمه فلش کنار شناسه کلیک کنید"
+msgstr "<strong>Show variations:</strong> click the arrow button next to the ID"
+
+msgid "<strong>نوع محصول:</strong> فیلتر محصولات ساده، متغیر، گروهی و..."
+msgstr "<strong>Product type:</strong> filter simple, variable, grouped products, etc."
+
+msgid "<strong>ورود CSV:</strong> همان فایل را پس از ویرایش در Excel/Sheets آپلود کنید؛ بر اساس ستون <code>ID</code> آیتم‌ها به‌روزرسانی می‌شوند"
+msgstr "<strong>Import CSV:</strong> upload the same file after editing it in Excel/Sheets; items are updated based on the <code>ID</code> column"
+
+msgid "<strong>وضعیت:</strong> فیلتر بر اساس منتشر شده، پیش‌نویس، خصوصی و..."
+msgstr "<strong>Status:</strong> filter by published, draft, private, etc."
+
+msgid "<strong>ویرایش Alt:</strong> می‌توانید Alt Text را دستی ویرایش کنید"
+msgstr "<strong>Edit Alt:</strong> you can edit the Alt Text manually"
+
+msgid "<strong>ویرایش مستقل:</strong> هر Variation (سایز، رنگ و...) قابل ویرایش جداگانه است"
+msgstr "<strong>Independent editing:</strong> each variation (size, color, etc.) can be edited separately"
+
+msgid "<strong>ویرایش مستقیم:</strong> فیلدها را مستقیماً در جدول ویرایش کنید"
+msgstr "<strong>Inline editing:</strong> edit fields directly in the table"
+
+msgid "<strong>کلمه کلیدی:</strong> Focus Keyword خود را تعیین کنید"
+msgstr "<strong>Keyword:</strong> set your Focus Keyword"
+
+msgid "<strong>کپی به کل ستون (Fill-down):</strong> یک مقدار را روی تمام ردیف‌های یک ستون می‌ریزد"
+msgstr "<strong>Fill-down:</strong> applies one value to every row in a column"
+
+msgid "<strong>گالری:</strong> روی دکمه + کلیک کنید تا تصاویر گالری اضافه کنید"
+msgstr "<strong>Gallery:</strong> click the + button to add gallery images"
+
+msgid "<strong>یکپارچگی کامل:</strong> پلاگین با Yoast SEO، Rank Math و SEOPress کار می‌کند"
+msgstr "<strong>Full integration:</strong> the plugin works with Yoast SEO, Rank Math and SEOPress"
+
+msgid "No Follow"
+msgstr "No Follow"
+
+msgid "No Follow (عدم دنبال کردن لینک‌ها)"
+msgstr "No Follow (do not follow links)"
+
+msgid "No Index"
+msgstr "No Index"
+
+msgid "No Index (عدم نمایش در موتورهای جستجو)"
+msgstr "No Index (hide from search engines)"
+
+msgid "Variation یافت نشد"
+msgstr "Variation not found"
+
+msgid "آیا از اعمال این عملیات روی %d مورد اطمینان دارید؟"
+msgstr "Are you sure you want to apply this action to %d item(s)?"
+
+msgid "آیا از ذخیره %d مورد تغییر یافته اطمینان دارید؟"
+msgstr "Are you sure you want to save %d changed item(s)?"
+
+msgid "آیا مطمئن هستید؟"
+msgstr "Are you sure?"
+
+msgid "ابتدا یک نوع پست انتخاب کنید."
+msgstr "Please select a post type first."
+
+msgid "ابتدا یک نوع پست را در تنظیمات انتخاب کنید."
+msgstr "Please select a post type in Settings first."
+
+msgid "ابزارهای پیشرفته (CSV / جایگزینی / کپی ستون)"
+msgstr "Advanced tools (CSV / Find & Replace / Fill-down)"
+
+msgid "ابعاد تصویر باید حداقل %1$dx%2$d پیکسل باشد."
+msgstr "The image must be at least %1$dx%2$d pixels."
+
+msgid "ارتفاع"
+msgstr "Height"
+
+msgid "استفاده از این تصویر"
+msgstr "Use this image"
+
+msgid "اطلاعات نامعتبر است"
+msgstr "Invalid data"
+
+msgid "اعمال"
+msgstr "Apply"
+
+msgid "اعمال روی همه"
+msgstr "Apply to all"
+
+msgid "اعمال فیلتر"
+msgstr "Apply filter"
+
+msgid "افزودن به گالری"
+msgstr "Add to gallery"
+
+msgid "افزودن تصویر"
+msgstr "Add image"
+
+msgid "انتخاب تصاویر گالری"
+msgstr "Select gallery images"
+
+msgid "انتخاب تصویر"
+msgstr "Select image"
+
+msgid "انتخاب فیلدها"
+msgstr "Select fields"
+
+msgid "انتخاب نوع پست"
+msgstr "Select post type"
+
+msgid "انتخاب همه"
+msgstr "Select all"
+
+msgid "انتخاب کنید..."
+msgstr "Select..."
+
+msgid "انتشار"
+msgstr "Publish"
+
+msgid "انتقال به زباله‌دان"
+msgstr "Move to Trash"
+
+msgid "برای شروع، ابتدا نوع پست و فیلدهای مورد نظر خود را انتخاب کنید"
+msgstr "To get started, first select your post type and the fields you want"
+
+msgid "برند"
+msgstr "Brand"
+
+msgid "برچسب"
+msgstr "Tag"
+
+msgid "برچسب محصول"
+msgstr "Product tag"
+
+msgid "برچسب‌ها"
+msgstr "Tags"
+
+msgid "تصویر با موفقیت آپلود شد"
+msgstr "Image uploaded successfully"
+
+msgid "تصویر با موفقیت حذف شد"
+msgstr "Image deleted successfully"
+
+msgid "تصویر شاخص"
+msgstr "Featured image"
+
+msgid "تعداد"
+msgstr "Quantity"
+
+msgid "تعداد %d مورد از CSV ذخیره شد"
+msgstr "%d item(s) saved from CSV"
+
+msgid "تعداد %d مورد با موفقیت ذخیره شد"
+msgstr "%d item(s) saved successfully"
+
+msgid "تعداد موجودی"
+msgstr "Stock quantity"
+
+msgid "تعداد نمایش"
+msgstr "Items to show"
+
+msgid "تعداد نمایش در هر صفحه:"
+msgstr "Items per page:"
+
+msgid "تغییرات ذخیره شد"
+msgstr "Changes saved"
+
+msgid "تنظیمات"
+msgstr "Settings"
+
+msgid "تنظیمات انجام نشده است!"
+msgstr "Settings are not configured!"
+
+msgid "تنظیمات با موفقیت ذخیره شد"
+msgstr "Settings saved successfully"
+
+msgid "تنظیمات نمایش"
+msgstr "Display settings"
+
+msgid "تنظیمات ویرایش گروهی پست تایپ ها"
+msgstr "Bulk Post-Type Editor Settings"
+
+msgid "توضیحات OpenGraph"
+msgstr "OpenGraph description"
+
+msgid "توضیحات توییتر"
+msgstr "Twitter description"
+
+msgid "توضیحات سئو (Rank Math)"
+msgstr "SEO description (Rank Math)"
+
+msgid "توضیحات سئو (SEOPress)"
+msgstr "SEO description (SEOPress)"
+
+msgid "توضیحات سئو (Yoast)"
+msgstr "SEO description (Yoast)"
+
+msgid "توضیحات کوتاه"
+msgstr "Short description"
+
+msgid "تگزونومی‌ها"
+msgstr "Taxonomies"
+
+msgid "جایگزین با..."
+msgstr "Replace with..."
+
+msgid "جایگزینی انجام شد — تعداد:"
+msgstr "Replacement done — count:"
+
+msgid "جستجو"
+msgstr "Search"
+
+msgid "جستجو در عنوان، محتوا و خلاصه..."
+msgstr "Search in title, content and excerpt..."
+
+msgid "جستجو..."
+msgstr "Search..."
+
+msgid "جستجو:"
+msgstr "Search:"
+
+msgid "جست‌وجو و جایگزینی در ستون"
+msgstr "Find & replace in column"
+
+msgid "جنس"
+msgstr "Material"
+
+msgid "حجم فایل نباید بیشتر از 10 مگابایت باشد."
+msgstr "The file must not be larger than 10 MB."
+
+msgid "حذف این فیلتر"
+msgstr "Remove this filter"
+
+msgid "حذف تصویر"
+msgstr "Remove image"
+
+msgid "خروجی CSV"
+msgstr "Export CSV"
+
+msgid "خروجی CSV از ردیف‌های فیلترشده"
+msgstr "Export the filtered rows to CSV"
+
+msgid "خصوصی"
+msgstr "Private"
+
+msgid "خطا"
+msgstr "Error"
+
+msgid "خطا در اجرای عملیات"
+msgstr "Error performing the action"
+
+msgid "خطا در بارگذاری فیلدها. لطفاً دوباره تلاش کنید."
+msgstr "Error loading fields. Please try again."
+
+msgid "خطا در ذخیره"
+msgstr "Save error"
+
+msgid "خطا در ذخیره‌سازی"
+msgstr "Error while saving"
+
+msgid "خطا در ورود CSV"
+msgstr "Error importing CSV"
+
+msgid "خطا در کپی کردن. لطفاً دستی کپی کنید:"
+msgstr "Copy failed. Please copy manually:"
+
+msgid "خلاصه"
+msgstr "Excerpt"
+
+msgid "خواندن فایل ممکن نشد."
+msgstr "The file could not be read."
+
+msgid "داده‌ای برای ذخیره وجود ندارد"
+msgstr "There is no data to save"
+
+msgid "در انتظار"
+msgstr "Pending"
+
+msgid "در انتظار بررسی"
+msgstr "Pending review"
+
+msgid "در انتظار تامین"
+msgstr "On backorder"
+
+msgid "در حال اجرا..."
+msgstr "Running..."
+
+msgid "در حال بارگذاری فیلدها..."
+msgstr "Loading fields..."
+
+msgid "در حال ذخیره..."
+msgstr "Saving..."
+
+msgid "در حال ذخیره‌سازی..."
+msgstr "Saving..."
+
+msgid "در حال ورود CSV..."
+msgstr "Importing CSV..."
+
+msgid "دسترسی غیرمجاز"
+msgstr "Unauthorized access"
+
+msgid "دسته‌بندی"
+msgstr "Category"
+
+msgid "دسته‌بندی محصول"
+msgstr "Product category"
+
+msgid "دسته‌بندی‌ها"
+msgstr "Categories"
+
+msgid "ذخیره تغییرات"
+msgstr "Save changes"
+
+msgid "ذخیره تنظیمات و تایید"
+msgstr "Save settings & confirm"
+
+msgid "ذخیره شد"
+msgstr "Saved"
+
+msgid "راهنمای کامل استفاده"
+msgstr "Complete usage guide"
+
+msgid "رفتن به تنظیمات"
+msgstr "Go to Settings"
+
+msgid "رفتن به ویرایشگر"
+msgstr "Go to editor"
+
+msgid "رنگ"
+msgstr "Color"
+
+msgid "زباله‌دان"
+msgstr "Trash"
+
+msgid "زمان‌بندی شده"
+msgstr "Scheduled"
+
+msgid "سایز"
+msgstr "Size"
+
+msgid "ستون «ID» در فایل پیدا نشد. از همان ساختار خروجی CSV استفاده کنید."
+msgstr "The “ID” column was not found in the file. Use the same structure as the CSV export."
+
+msgid "شروع کار"
+msgstr "Getting started"
+
+msgid "شما %d تغییر ذخیره نشده دارید. آیا مطمئن هستید؟"
+msgstr "You have %d unsaved change(s). Are you sure?"
+
+msgid "شناسه"
+msgstr "ID"
+
+msgid "شناسه محصول (SKU)"
+msgstr "SKU"
+
+msgid "صفحه %1$s از %2$s"
+msgstr "Page %1$s of %2$s"
+
+msgid "طول"
+msgstr "Length"
+
+msgid "عبارت جستجو را وارد کنید."
+msgstr "Enter a search term."
+
+msgid "عدم دسترسی به ویرایش این پست"
+msgstr "You don't have permission to edit this post"
+
+msgid "عرض"
+msgstr "Width"
+
+msgid "عملیات انجام نشد"
+msgstr "The operation failed"
+
+msgid "عملیات با موفقیت روی %d مورد انجام شد"
+msgstr "The action was successfully applied to %d item(s)"
+
+msgid "عملیات گروهی"
+msgstr "Bulk actions"
+
+msgid "عملیات یا آیتم‌ها انتخاب نشده‌اند"
+msgstr "No action or items selected"
+
+msgid "عنوان"
+msgstr "Title"
+
+msgid "عنوان OpenGraph"
+msgstr "OpenGraph title"
+
+msgid "عنوان توییتر"
+msgstr "Twitter title"
+
+msgid "عنوان سئو (Rank Math)"
+msgstr "SEO title (Rank Math)"
+
+msgid "عنوان سئو (SEOPress)"
+msgstr "SEO title (SEOPress)"
+
+msgid "عنوان سئو (Yoast)"
+msgstr "SEO title (Yoast)"
+
+msgid "فایل CSV روی آیتم‌های موجود (بر اساس ستون ID) اعمال می‌شود. ادامه می‌دهید؟"
+msgstr "The CSV will be applied to existing items (based on the ID column). Continue?"
+
+msgid "فایل آپلود شده یک تصویر معتبر نیست."
+msgstr "The uploaded file is not a valid image."
+
+msgid "فایل خالی یا نامعتبر است."
+msgstr "The file is empty or invalid."
+
+msgid "فایل یافت نشد"
+msgstr "File not found"
+
+msgid "فایلی آپلود نشده است."
+msgstr "No file was uploaded."
+
+msgid "فایلی انتخاب نشده است"
+msgstr "No file selected"
+
+msgid "فرمت تصویر معتبر نیست. فقط JPG, PNG, GIF و WebP مجاز است."
+msgstr "Invalid image format. Only JPG, PNG, GIF and WebP are allowed."
+
+msgid "فعال"
+msgstr "Enabled"
+
+msgid "فقط فایل CSV مجاز است."
+msgstr "Only CSV files are allowed."
+
+msgid "فیلترهای فعال:"
+msgstr "Active filters:"
+
+msgid "فیلترهای پیشرفته"
+msgstr "Advanced filters"
+
+msgid "فیلدهای سئو"
+msgstr "SEO fields"
+
+msgid "فیلدهایی که می‌خواهید در لیست ویرایش نمایش داده شوند را انتخاب کنید."
+msgstr "Select the fields you want shown in the edit list."
+
+msgid "فیلدی انتخاب نشده است!"
+msgstr "No fields selected!"
+
+msgid "فیلدی برای این نوع پست یافت نشد."
+msgstr "No fields found for this post type."
+
+msgid "قیمت"
+msgstr "Price"
+
+msgid "قیمت عادی"
+msgstr "Regular price"
+
+msgid "قیمت فروش"
+msgstr "Sale price"
+
+msgid "قیمت فروش ویژه"
+msgstr "Sale price"
+
+msgid "قیمت ویژه"
+msgstr "Special price"
+
+msgid "لطفاً ابتدا به صفحه تنظیمات بروید و یک نوع پست انتخاب کنید."
+msgstr "Please go to the Settings page first and select a post type."
+
+msgid "لطفاً به صفحه تنظیمات بروید و فیلدهای مورد نظر را انتخاب کنید."
+msgstr "Please go to the Settings page and select the fields you want."
+
+msgid "لطفاً فیلترهای خود را تغییر دهید یا جستجوی دیگری انجام دهید."
+msgstr "Please change your filters or try a different search."
+
+msgid "لطفاً یک عملیات و حداقل یک مورد انتخاب کنید"
+msgstr "Please select an action and at least one item"
+
+msgid "لطفاً یک نوع پست انتخاب کنید"
+msgstr "Please select a post type"
+
+msgid "لینک کانونیکال (Rank Math)"
+msgstr "Canonical URL (Rank Math)"
+
+msgid "لینک کانونیکال (SEOPress)"
+msgstr "Canonical URL (SEOPress)"
+
+msgid "لینک کانونیکال (Yoast)"
+msgstr "Canonical URL (Yoast)"
+
+msgid "متافیلدها"
+msgstr "Meta fields"
+
+msgid "متن جایگزین (Alt)"
+msgstr "Alternative text (Alt)"
+
+msgid "محتوا"
+msgstr "Content"
+
+msgid "محصولات متغیر"
+msgstr "Variable products"
+
+msgid "مدل"
+msgstr "Model"
+
+msgid "مدیریت تصاویر"
+msgstr "Image management"
+
+msgid "مدیریت موجودی"
+msgstr "Manage stock"
+
+msgid "مقدار..."
+msgstr "Value..."
+
+msgid "منتشر شده"
+msgstr "Published"
+
+msgid "موجود"
+msgstr "In stock"
+
+msgid "موجودی"
+msgstr "Stock"
+
+msgid "مورد انتخاب شده"
+msgstr "item(s) selected"
+
+msgid "موردی یافت نشد"
+msgstr "No items found"
+
+msgid "می‌توانید چند مورد انتخاب کنید (Ctrl+Click)"
+msgstr "You can select multiple items (Ctrl+Click)"
+
+msgid "نام فایل حاوی پسوند غیرمجاز است."
+msgstr "The file name contains a disallowed extension."
+
+msgid "ناموجود"
+msgstr "Out of stock"
+
+msgid "نامک"
+msgstr "Slug"
+
+msgid "نمایش %1$d تا %2$d از %3$d مورد"
+msgstr "Showing %1$d to %2$d of %3$d items"
+
+msgid "نمایش Variations"
+msgstr "Show variations"
+
+msgid "نوع محصول"
+msgstr "Product type"
+
+msgid "نوع واقعی فایل با پسوند آن مطابقت ندارد."
+msgstr "The file's actual type does not match its extension."
+
+msgid "نوع پست انتخاب نشده است"
+msgstr "No post type selected"
+
+msgid "نوع پست معتبر نیست"
+msgstr "Invalid post type"
+
+msgid "نوع:"
+msgstr "Type:"
+
+msgid "نکات مهم"
+msgstr "Important notes"
+
+msgid "همه"
+msgstr "All"
+
+msgid "همه (بدون زباله‌دان)"
+msgstr "All (excluding Trash)"
+
+msgid "همه انواع"
+msgstr "All types"
+
+msgid "هیچ تغییری برای ذخیره وجود ندارد."
+msgstr "There are no changes to save."
+
+msgid "هیچ ردیف معتبری برای ذخیره پیدا نشد."
+msgstr "No valid rows found to save."
+
+msgid "ورود CSV"
+msgstr "Import CSV"
+
+msgid "ورود CSV و ذخیره گروهی"
+msgstr "Import CSV and bulk-save"
+
+msgid "وزن"
+msgstr "Weight"
+
+msgid "وضعیت"
+msgstr "Status"
+
+msgid "وضعیت انتشار"
+msgstr "Publish status"
+
+msgid "وضعیت موجودی"
+msgstr "Stock status"
+
+msgid "وضعیت:"
+msgstr "Status:"
+
+msgid "ووکامرس فعال نیست"
+msgstr "WooCommerce is not active"
+
+msgid "ویرایش"
+msgstr "Edit"
+
+msgid "ویرایش گروهی پست تایپ ها"
+msgstr "Bulk Post-Type Editor"
+
+msgid "ویرایش گروهی پست تایپ ها - %s"
+msgstr "Bulk Post-Type Editor - %s"
+
+msgid "ویرایش گروهی پست‌ها"
+msgstr "Bulk edit posts"
+
+msgid "ویرایشگر گروهی"
+msgstr "Bulk editor"
+
+msgid "ویژگی‌ها"
+msgstr "Attributes"
+
+msgid "ویژگی‌های محصول"
+msgstr "Product attributes"
+
+msgid "ویژگی‌های محصول (Attributes)"
+msgstr "Product attributes"
+
+msgid "پاک کردن فیلترها"
+msgstr "Clear filters"
+
+msgid "پاک کردن همه"
+msgstr "Clear all"
+
+msgid "پست یافت نشد"
+msgstr "Post not found"
+
+msgid "پیدا کن..."
+msgstr "Find..."
+
+msgid "پیش‌نویس"
+msgstr "Draft"
+
+msgid "پیوند یکتا"
+msgstr "Permalink"
+
+msgid "پیوند یکتا (URL)"
+msgstr "Permalink (URL)"
+
+msgid "کلمه کلیدی (Rank Math)"
+msgstr "Focus keyword (Rank Math)"
+
+msgid "کلمه کلیدی (SEOPress)"
+msgstr "Focus keyword (SEOPress)"
+
+msgid "کلمه کلیدی (Yoast)"
+msgstr "Focus keyword (Yoast)"
+
+msgid "کپی"
+msgstr "Copy"
+
+msgid "کپی نام فایل"
+msgstr "Copy file name"
+
+msgid "کپی یک مقدار به کل ستون"
+msgstr "Copy one value to the whole column"
+
+msgid "گالری"
+msgstr "Gallery"
+
+msgid "گالری تصاویر"
+msgstr "Image gallery"
+
+msgid "یک ستون و مقدار را انتخاب کنید."
+msgstr "Select a column and a value."
+
+msgid "یک نوع پست را برای ویرایش گروهی انتخاب کنید. در هر زمان فقط با یک نوع پست می‌توانید کار کنید."
+msgstr "Select a post type for bulk editing. You can work with only one post type at a time."
+
+
+msgid "کل"
+msgstr "Total"
+
+msgid "این صفحه"
+msgstr "This page"
+
+msgid "انتخاب‌شده"
+msgstr "Selected"
+
+msgid "خروجی CSV از همه‌ی ردیف‌های فیلترشده (در تمام صفحات)"
+msgstr "Export CSV of all filtered rows (every page)"
+
+msgid "خروجی CSV (همه: %s)"
+msgstr "Export CSV (all: %s)"
+
+msgid "انتخاب همه‌ی %s مورد در تمام صفحات"
+msgstr "Select all %s items across all pages"
+
+msgid "همه‌ی %s مورد (تمام صفحات) انتخاب شدند."
+msgstr "All %s items (every page) selected."
+
+msgid "لغو انتخاب"
+msgstr "Clear selection"
+
+msgid "شماره ردیف"
+msgstr "Row number"
+
+msgid "شناسه پست"
+msgstr "Post ID"
