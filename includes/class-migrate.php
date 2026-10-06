@@ -137,6 +137,10 @@ class BESM_Migrate
         }
         $zip->close();
 
+        if (!empty($_GET['besm_dl'])) {
+            setcookie('besm_download', sanitize_text_field(wp_unslash($_GET['besm_dl'])), time() + 60, '/');
+        }
+
         $filename = $post_type . '-bundle-' . gmdate('Y-m-d-His') . '.zip';
         nocache_headers();
         header('Content-Type: application/zip');

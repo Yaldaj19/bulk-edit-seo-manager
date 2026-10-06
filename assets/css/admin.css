@@ -1610,3 +1610,23 @@
 }
 .besm-wrap .besm-all-pages-selected .dashicons { font-size: 16px; width: 16px; height: 16px; }
 .besm-wrap .besm-select-all-pages-wrap { margin-inline-start: 4px; }
+
+/* ── Loading overlay box + text (progress feedback) ── */
+.besm-wrap .besm-loading-box,
+.besm-loading-overlay .besm-loading-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 28px 36px;
+    background: var(--besm-surface, #fff);
+    border: 1px solid var(--besm-border, #e5e7eb);
+    border-radius: var(--besm-radius, 12px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+.besm-loading-overlay .besm-loading-text {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--besm-text, #111827);
+}

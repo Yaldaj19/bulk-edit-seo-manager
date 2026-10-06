@@ -837,3 +837,27 @@ msgstr "Import ZIP bundle: images are created in the Media Library and linked"
 
 msgid "ورود کامل (ZIP + تصاویر)"
 msgstr "Full import (ZIP + images)"
+
+msgid "%1$d پست به‌روز شد و %2$d تصویر در رسانه ساخته شد."
+msgstr "%1$d posts updated and %2$d images created in the Media Library."
+
+msgid "%d پست با آن ID در این سایت پیدا نشد (ساخته نشد)."
+msgstr "%d posts with that ID were not found on this site (not created)."
+
+msgid "خطا در ورود بسته"
+msgstr "Error importing the bundle"
+
+msgid "(%d پست با آن ID پیدا نشد.)"
+msgstr "(%d posts with that ID were not found.)"
+
+msgid "%d پست با آن ID پیدا نشد"
+msgstr "%d posts with that ID were not found"
+
+msgid "در حال ورود بسته و ساخت تصاویر..."
+msgstr "Importing bundle and creating images…"
+
+msgid "در حال آماده‌سازی خروجی..."
+msgstr "Preparing export…"
+
+msgid "در حال پردازش..."
+msgstr "Processing…"

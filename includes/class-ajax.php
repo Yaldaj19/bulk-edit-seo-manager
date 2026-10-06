@@ -42,25 +42,37 @@ class BESM_Ajax
         check_ajax_referer('besm_editor_nonce', 'nonce');
 
         if (!current_user_can('edit_posts')) {
-            wp_send_json_error(array('message' => 'دسترسی غیرمجاز'));
+            wp_send_json_error(array('message' => __('دسترسی غیرمجاز', 'bulk-edit-seo')));
         }
 
         if (empty($_FILES['zip'])) {
-            wp_send_json_error(array('message' => 'فایلی انتخاب نشده است'));
+            wp_send_json_error(array('message' => __('فایلی انتخاب نشده است', 'bulk-edit-seo')));
         }
 
         $migrate = new BESM_Migrate();
         $results = $migrate->import($_FILES['zip']);
 
+        $failed = isset($results['failed_count']) ? (int) $results['failed_count'] : 0;
+        $imgs   = isset($results['images']) ? (int) $results['images'] : 0;
+
         if (!empty($results['success'])) {
+            $msg = sprintf(__('%1$d پست به‌روز شد و %2$d تصویر در رسانه ساخته شد.', 'bulk-edit-seo'), $results['saved_count'], $imgs);
+            if ($failed > 0) {
+                $msg .= ' ' . sprintf(__('%d پست با آن ID در این سایت پیدا نشد (ساخته نشد).', 'bulk-edit-seo'), $failed);
+            }
             wp_send_json_success(array(
-                'message'      => sprintf('تعداد %1$d مورد و %2$d تصویر از بسته وارد شد', $results['saved_count'], isset($results['images']) ? $results['images'] : 0),
+                'message'      => $msg,
                 'saved_count'  => $results['saved_count'],
-                'failed_count' => $results['failed_count'],
+                'failed_count' => $failed,
+                'images'       => $imgs,
             ));
         } else {
+            $msg = isset($results['message']) ? $results['message'] : __('خطا در ورود بسته', 'bulk-edit-seo');
+            if ($failed > 0) {
+                $msg .= ' ' . sprintf(__('(%d پست با آن ID پیدا نشد.)', 'bulk-edit-seo'), $failed);
+            }
             wp_send_json_error(array(
-                'message' => isset($results['message']) ? $results['message'] : 'خطا در ورود بسته',
+                'message' => $msg,
                 'errors'  => isset($results['errors']) ? $results['errors'] : array(),
             ));
         }
@@ -90,8 +102,12 @@ class BESM_Ajax
         $results = $csv->import($_FILES['csv']);
 
         if (!empty($results['success'])) {
+            $msg = sprintf(__('تعداد %d مورد از CSV ذخیره شد', 'bulk-edit-seo'), $results['saved_count']);
+            if (!empty($results['failed_count'])) {
+                $msg .= ' ' . sprintf(__('%d پست با آن ID پیدا نشد', 'bulk-edit-seo'), (int) $results['failed_count']);
+            }
             wp_send_json_success(array(
-                'message'      => sprintf(__('تعداد %d مورد از CSV ذخیره شد', 'bulk-edit-seo'), $results['saved_count']),
+                'message'      => $msg,
                 'saved_count'  => $results['saved_count'],
                 'failed_count' => $results['failed_count'],
                 'skipped'      => isset($results['skipped']) ? $results['skipped'] : 0,

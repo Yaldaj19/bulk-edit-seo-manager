@@ -197,7 +197,7 @@ $post_type_label = $this->post_handler->get_post_type_label($active_post_type);
         <div class="besm-tools-bar">
 
             <div class="besm-tool-group">
-                <a href="<?php echo esc_url($besm_export_url); ?>" class="besm-btn besm-btn-ghost" title="<?php echo esc_attr__('خروجی CSV از همه‌ی ردیف‌های فیلترشده (در تمام صفحات)', 'bulk-edit-seo'); ?>">
+                <a href="<?php echo esc_url($besm_export_url); ?>" class="besm-btn besm-btn-ghost besm-export-link" title="<?php echo esc_attr__('خروجی CSV از همه‌ی ردیف‌های فیلترشده (در تمام صفحات)', 'bulk-edit-seo'); ?>">
                     <span class="dashicons dashicons-media-spreadsheet"></span>
                     <?php
                     /* translators: %s: total number of items */
@@ -218,7 +218,7 @@ $post_type_label = $this->post_handler->get_post_type_label($active_post_type);
                 <div class="besm-tool-group besm-tool-group-col">
                     <span class="besm-tool-group-label"><?php esc_html_e('انتقال کامل همراه تصاویر (ZIP)', 'bulk-edit-seo'); ?></span>
                     <div class="besm-tool-group-row">
-                        <a href="<?php echo esc_url($besm_export_zip_url); ?>" class="besm-btn besm-btn-ghost" title="<?php echo esc_attr__('خروجی کامل: CSV + فایل تصاویر (تصویر شاخص، گالری و عکس‌های داخل متن)', 'bulk-edit-seo'); ?>">
+                        <a href="<?php echo esc_url($besm_export_zip_url); ?>" class="besm-btn besm-btn-ghost besm-export-link" title="<?php echo esc_attr__('خروجی کامل: CSV + فایل تصاویر (تصویر شاخص، گالری و عکس‌های داخل متن)', 'bulk-edit-seo'); ?>">
                             <span class="dashicons dashicons-portfolio"></span>
                             <?php esc_html_e('خروجی کامل (ZIP + تصاویر)', 'bulk-edit-seo'); ?>
                         </a>
@@ -550,5 +550,8 @@ $post_type_label = $this->post_handler->get_post_type_label($active_post_type);
 
 <!-- Simple Loading Overlay -->
 <div class="besm-loading-overlay" id="besm-loading-overlay">
-    <div class="besm-loading-spinner"></div>
+    <div class="besm-loading-box">
+        <div class="besm-loading-spinner"></div>
+        <p class="besm-loading-text" id="besm-loading-text"><?php esc_html_e('در حال پردازش...', 'bulk-edit-seo'); ?></p>
+    </div>
 </div>

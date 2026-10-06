@@ -75,6 +75,11 @@ class BESM_CSV
 
         $query_ids = get_posts($args);
 
+        // Signal the browser (JS spinner) that the download is starting.
+        if (!empty($_GET['besm_dl'])) {
+            setcookie('besm_download', sanitize_text_field(wp_unslash($_GET['besm_dl'])), time() + 60, '/');
+        }
+
         // Send download headers.
         $filename = $post_type . '-' . gmdate('Y-m-d-His') . '.csv';
         nocache_headers();

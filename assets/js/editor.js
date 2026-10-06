@@ -81,6 +81,44 @@
                 $('#besm-import-zip-file').trigger('click');
             });
             $('#besm-import-zip-file').on('change', this.handleImportZip.bind(this));
+
+            // Export links: show a spinner until the download actually starts
+            $('.besm-export-link').on('click', this.handleExportClick.bind(this));
+        },
+
+        // Loading overlay helpers
+        showOverlay: function (text) {
+            $('#besm-loading-text').text(text || '');
+            $('#besm-loading-overlay').addClass('active');
+        },
+        hideOverlay: function () {
+            $('#besm-loading-overlay').removeClass('active');
+        },
+
+        // Export: append a token, show spinner, poll the download cookie set by the server.
+        handleExportClick: function (e) {
+            const a = e.currentTarget;
+            if (!a.dataset.baseHref) {
+                a.dataset.baseHref = a.getAttribute('href');
+            }
+            const base = a.dataset.baseHref;
+            const token = 'dl' + new Date().getTime();
+            a.setAttribute('href', base + (base.indexOf('?') > -1 ? '&' : '?') + 'besm_dl=' + token);
+
+            this.showOverlay(besmEditor.strings.preparingExport);
+
+            const started = new Date().getTime();
+            const self = this;
+            const timer = setInterval(function () {
+                const hit = document.cookie.indexOf('besm_download=' + token) !== -1;
+                if (hit || (new Date().getTime() - started) > 60000) {
+                    clearInterval(timer);
+                    self.hideOverlay();
+                    // clear the cookie
+                    document.cookie = 'besm_download=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+                }
+            }, 400);
+            // do not preventDefault — let the browser follow the link and download
         },
 
         // Full ZIP bundle import → side-loads images + bulk save on the server
@@ -98,7 +136,7 @@
             formData.append('nonce', besmEditor.nonce);
             formData.append('zip', input.files[0]);
 
-            $('#besm-loading-overlay').addClass('active');
+            this.showOverlay(besmEditor.strings.importingZip);
 
             $.ajax({
                 url: besmEditor.ajaxUrl,
@@ -142,7 +180,7 @@
             formData.append('nonce', besmEditor.nonce);
             formData.append('csv', file);
 
-            $('#besm-loading-overlay').addClass('active');
+            this.showOverlay(besmEditor.strings.importing);
 
             $.ajax({
                 url: besmEditor.ajaxUrl,

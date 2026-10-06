@@ -171,6 +171,8 @@ class BESM_Core
                     'importConfirm' => __('فایل CSV روی آیتم‌های موجود (بر اساس ستون ID) اعمال می‌شود. ادامه می‌دهید؟', 'bulk-edit-seo'),
                     'importZipConfirm' => __('بسته‌ی ZIP وارد می‌شود: تصاویر در کتابخانه رسانه ساخته و به پست‌ها (بر اساس ستون ID) لینک می‌شوند. ادامه می‌دهید؟', 'bulk-edit-seo'),
                     'importing' => __('در حال ورود CSV...', 'bulk-edit-seo'),
+                    'importingZip' => __('در حال ورود بسته و ساخت تصاویر...', 'bulk-edit-seo'),
+                    'preparingExport' => __('در حال آماده‌سازی خروجی...', 'bulk-edit-seo'),
                     'frEmpty' => __('عبارت جستجو را وارد کنید.', 'bulk-edit-seo'),
                     'frDone' => __('جایگزینی انجام شد — تعداد:', 'bulk-edit-seo'),
                     'fillEmpty' => __('یک ستون و مقدار را انتخاب کنید.', 'bulk-edit-seo'),
