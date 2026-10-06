@@ -83,6 +83,8 @@ $post_type_label = $this->post_handler->get_post_type_label($active_post_type);
                         <li><?php echo wp_kses_post( __('<strong>جست‌وجو و جایگزینی:</strong> در یک ستون مشخص، یک عبارت را در همه‌ی ردیف‌ها پیدا و جایگزین می‌کند', 'bulk-edit-seo') ); ?></li>
                         <li><?php echo wp_kses_post( __('<strong>کپی به کل ستون (Fill-down):</strong> یک مقدار را روی تمام ردیف‌های یک ستون می‌ریزد', 'bulk-edit-seo') ); ?></li>
                         <li><?php echo wp_kses_post( __('<strong>توجه:</strong> جایگزینی و کپی ستون فقط در مرورگر اعمال می‌شوند؛ برای ثبت نهایی حتماً «ذخیره تغییرات» را بزنید', 'bulk-edit-seo') ); ?></li>
+                        <li><?php echo wp_kses_post( __('<strong>انتقال کامل همراه تصاویر (ZIP):</strong> «خروجی کامل» یک فایل ZIP شامل CSV و فایل همه‌ی تصاویر (شاخص، گالری و داخل متن) می‌سازد. در سایت مقصد «ورود کامل» را بزن تا تصاویر در رسانه ساخته و به پست‌ها (بر اساس ID) لینک شوند و آدرس عکس‌های داخل متن بازنویسی شود — بدون نیاز به دسترسی مقصد به سایت مبدأ.', 'bulk-edit-seo') ); ?></li>
+                        <li><?php echo wp_kses_post( __('<strong>نکته‌ی ID:</strong> ورود CSV/ZIP آیتم‌ها را بر اساس ستون <code>ID</code> به‌روزرسانی می‌کند؛ پس در سایت مقصد باید پست‌هایی با همان IDها وجود داشته باشند.', 'bulk-edit-seo') ); ?></li>
                     </ul>
                 </div>
 
@@ -179,6 +181,16 @@ $post_type_label = $this->post_handler->get_post_type_label($active_post_type);
         if (!empty($besm_query)) {
             $besm_export_url .= '&' . $besm_query;
         }
+
+        // Full bundle (ZIP: CSV + images) export URL.
+        $besm_export_zip_url = add_query_arg(
+            array('action' => 'besm_export_zip', '_wpnonce' => wp_create_nonce('besm_export_zip')),
+            admin_url('admin-post.php')
+        );
+        if (!empty($besm_query)) {
+            $besm_export_zip_url .= '&' . $besm_query;
+        }
+        $besm_zip_ok = class_exists('ZipArchive');
         ?>
 
         <!-- Advanced tools: CSV + Find/Replace + Fill-down -->
@@ -198,6 +210,26 @@ $post_type_label = $this->post_handler->get_post_type_label($active_post_type);
                 </button>
                 <input type="file" id="besm-import-csv-file" accept=".csv" style="display:none;">
             </div>
+
+            <?php if ($besm_zip_ok): ?>
+                <span class="besm-tools-divider" aria-hidden="true"></span>
+
+                <!-- Full bundle: CSV + images (cross-site migration) -->
+                <div class="besm-tool-group besm-tool-group-col">
+                    <span class="besm-tool-group-label"><?php esc_html_e('انتقال کامل همراه تصاویر (ZIP)', 'bulk-edit-seo'); ?></span>
+                    <div class="besm-tool-group-row">
+                        <a href="<?php echo esc_url($besm_export_zip_url); ?>" class="besm-btn besm-btn-ghost" title="<?php echo esc_attr__('خروجی کامل: CSV + فایل تصاویر (تصویر شاخص، گالری و عکس‌های داخل متن)', 'bulk-edit-seo'); ?>">
+                            <span class="dashicons dashicons-portfolio"></span>
+                            <?php esc_html_e('خروجی کامل (ZIP + تصاویر)', 'bulk-edit-seo'); ?>
+                        </a>
+                        <button type="button" id="besm-import-zip-btn" class="besm-btn besm-btn-ghost" title="<?php echo esc_attr__('ورود بسته‌ی ZIP: تصاویر در رسانه ساخته و لینک می‌شوند', 'bulk-edit-seo'); ?>">
+                            <span class="dashicons dashicons-upload"></span>
+                            <?php esc_html_e('ورود کامل (ZIP + تصاویر)', 'bulk-edit-seo'); ?>
+                        </button>
+                        <input type="file" id="besm-import-zip-file" accept=".zip" style="display:none;">
+                    </div>
+                </div>
+            <?php endif; ?>
 
             <?php if (!empty($besm_editable_cols)): ?>
                 <span class="besm-tools-divider" aria-hidden="true"></span>

@@ -3,7 +3,7 @@
  * Plugin Name: ویرایش گروهی پست تایپ ها
  * Plugin URI: https://github.com/Yaldaj19/bulk-edit-seo-manager
  * Description: ویرایشگر پیشرفته گروهی برای پست‌ها، محصولات و پست‌تایپ‌های سفارشی با تمرکز بر بهینه‌سازی سئو
- * Version: 1.4.0
+ * Version: 1.5.0
  * Author: YJ19
  * Author URI: https://yaldajahanshahi.ir
  * Text Domain: bulk-edit-seo
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Plugin constants
-define('BESM_VERSION', '1.4.0');
+define('BESM_VERSION', '1.5.0');
 define('BESM_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('BESM_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('BESM_PLUGIN_BASENAME', plugin_basename(__FILE__));

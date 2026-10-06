@@ -23,6 +23,47 @@ class BESM_Ajax
         // CSV import / export
         add_action('wp_ajax_besm_import_csv', array($this, 'import_csv'));
         add_action('admin_post_besm_export_csv', array($this, 'export_csv'));
+
+        // Full ZIP bundle (CSV + image files)
+        add_action('wp_ajax_besm_import_zip', array($this, 'import_zip'));
+        add_action('admin_post_besm_export_zip', array($this, 'export_zip'));
+    }
+
+    // Export a full ZIP bundle (CSV + images).
+    public function export_zip()
+    {
+        $migrate = new BESM_Migrate();
+        $migrate->export(); // streams + exits
+    }
+
+    // Import a full ZIP bundle and bulk-save, side-loading images.
+    public function import_zip()
+    {
+        check_ajax_referer('besm_editor_nonce', 'nonce');
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => 'دسترسی غیرمجاز'));
+        }
+
+        if (empty($_FILES['zip'])) {
+            wp_send_json_error(array('message' => 'فایلی انتخاب نشده است'));
+        }
+
+        $migrate = new BESM_Migrate();
+        $results = $migrate->import($_FILES['zip']);
+
+        if (!empty($results['success'])) {
+            wp_send_json_success(array(
+                'message'      => sprintf('تعداد %1$d مورد و %2$d تصویر از بسته وارد شد', $results['saved_count'], isset($results['images']) ? $results['images'] : 0),
+                'saved_count'  => $results['saved_count'],
+                'failed_count' => $results['failed_count'],
+            ));
+        } else {
+            wp_send_json_error(array(
+                'message' => isset($results['message']) ? $results['message'] : 'خطا در ورود بسته',
+                'errors'  => isset($results['errors']) ? $results['errors'] : array(),
+            ));
+        }
     }
 
     // Export the filtered result set as a CSV download.

@@ -795,3 +795,45 @@ msgstr "Row number"
 
 msgid "شناسه پست"
 msgstr "Post ID"
+
+msgid "بسته‌ی ZIP وارد می‌شود: تصاویر در کتابخانه رسانه ساخته و به پست‌ها (بر اساس ستون ID) لینک می‌شوند. ادامه می‌دهید؟"
+msgstr "The ZIP bundle will be imported: images are created in the Media Library and linked to posts (by the ID column). Continue?"
+
+msgid "افزونه ZipArchive روی سرور فعال نیست."
+msgstr "The ZipArchive PHP extension is not enabled on the server."
+
+msgid "ساخت فایل ZIP ممکن نشد."
+msgstr "Could not create the ZIP file."
+
+msgid "فقط فایل ZIP مجاز است."
+msgstr "Only ZIP files are allowed."
+
+msgid "فایل ZIP معتبر نیست."
+msgstr "The ZIP file is not valid."
+
+msgid "فایل data.csv در بسته پیدا نشد."
+msgstr "data.csv was not found in the bundle."
+
+msgid "ستون ID در data.csv نیست."
+msgstr "The ID column is missing from data.csv."
+
+msgid "<strong>انتقال کامل همراه تصاویر (ZIP):</strong> «خروجی کامل» یک فایل ZIP شامل CSV و فایل همه‌ی تصاویر (شاخص، گالری و داخل متن) می‌سازد. در سایت مقصد «ورود کامل» را بزن تا تصاویر در رسانه ساخته و به پست‌ها (بر اساس ID) لینک شوند و آدرس عکس‌های داخل متن بازنویسی شود — بدون نیاز به دسترسی مقصد به سایت مبدأ."
+msgstr "<strong>Full transfer with images (ZIP):</strong> \"Full export\" builds a ZIP containing the CSV and every image file (featured, gallery and in-content). On the destination site click \"Full import\" to create the images in the Media Library, link them to posts (by ID) and rewrite in-content image URLs — with no need for the destination to reach the source site."
+
+msgid "<strong>نکته‌ی ID:</strong> ورود CSV/ZIP آیتم‌ها را بر اساس ستون <code>ID</code> به‌روزرسانی می‌کند؛ پس در سایت مقصد باید پست‌هایی با همان IDها وجود داشته باشند."
+msgstr "<strong>Note on ID:</strong> CSV/ZIP import updates items by the <code>ID</code> column, so posts with the same IDs must already exist on the destination site."
+
+msgid "انتقال کامل همراه تصاویر (ZIP)"
+msgstr "Full transfer with images (ZIP)"
+
+msgid "خروجی کامل: CSV + فایل تصاویر (تصویر شاخص، گالری و عکس‌های داخل متن)"
+msgstr "Full export: CSV + image files (featured, gallery and in-content images)"
+
+msgid "خروجی کامل (ZIP + تصاویر)"
+msgstr "Full export (ZIP + images)"
+
+msgid "ورود بسته‌ی ZIP: تصاویر در رسانه ساخته و لینک می‌شوند"
+msgstr "Import ZIP bundle: images are created in the Media Library and linked"
+
+msgid "ورود کامل (ZIP + تصاویر)"
+msgstr "Full import (ZIP + images)"

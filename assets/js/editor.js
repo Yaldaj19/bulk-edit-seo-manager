@@ -75,6 +75,54 @@
             $('#besm-import-csv-file').on('change', this.handleImportCsv.bind(this));
             $('#besm-fr-apply').on('click', this.applyFindReplace.bind(this));
             $('#besm-fill-apply').on('click', this.applyFillDown.bind(this));
+
+            // Full ZIP bundle import (CSV + images)
+            $('#besm-import-zip-btn').on('click', function () {
+                $('#besm-import-zip-file').trigger('click');
+            });
+            $('#besm-import-zip-file').on('change', this.handleImportZip.bind(this));
+        },
+
+        // Full ZIP bundle import → side-loads images + bulk save on the server
+        handleImportZip: function (e) {
+            const input = e.currentTarget;
+            if (!input.files || !input.files.length) return;
+
+            if (!confirm(besmEditor.strings.importZipConfirm)) {
+                input.value = '';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('action', 'besm_import_zip');
+            formData.append('nonce', besmEditor.nonce);
+            formData.append('zip', input.files[0]);
+
+            $('#besm-loading-overlay').addClass('active');
+
+            $.ajax({
+                url: besmEditor.ajaxUrl,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success) {
+                        BESMEditor.showNotice('success', response.data.message);
+                        setTimeout(function () { location.reload(); }, 1800);
+                    } else {
+                        $('#besm-loading-overlay').removeClass('active');
+                        BESMEditor.showNotice('error', response.data.message || besmEditor.strings.error);
+                    }
+                },
+                error: function () {
+                    $('#besm-loading-overlay').removeClass('active');
+                    BESMEditor.showNotice('error', besmEditor.strings.error);
+                },
+                complete: function () {
+                    input.value = '';
+                }
+            });
         },
 
         // CSV import → bulk save on the server

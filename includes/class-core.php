@@ -169,6 +169,7 @@ class BESM_Core
                     'removeImage' => __('حذف تصویر', 'bulk-edit-seo'),
                     'confirmDelete' => __('آیا مطمئن هستید؟', 'bulk-edit-seo'),
                     'importConfirm' => __('فایل CSV روی آیتم‌های موجود (بر اساس ستون ID) اعمال می‌شود. ادامه می‌دهید؟', 'bulk-edit-seo'),
+                    'importZipConfirm' => __('بسته‌ی ZIP وارد می‌شود: تصاویر در کتابخانه رسانه ساخته و به پست‌ها (بر اساس ستون ID) لینک می‌شوند. ادامه می‌دهید؟', 'bulk-edit-seo'),
                     'importing' => __('در حال ورود CSV...', 'bulk-edit-seo'),
                     'frEmpty' => __('عبارت جستجو را وارد کنید.', 'bulk-edit-seo'),
                     'frDone' => __('جایگزینی انجام شد — تعداد:', 'bulk-edit-seo'),
