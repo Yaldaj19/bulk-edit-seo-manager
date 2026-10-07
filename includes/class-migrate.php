@@ -137,6 +137,13 @@ class BESM_Migrate
         }
         $zip->close();
 
+        // CRITICAL: discard any buffered output (stray PHP notices/warnings,
+        // whitespace, other plugins) so they can't corrupt the binary stream.
+        @ini_set('display_errors', '0');
+        while (ob_get_level()) {
+            ob_end_clean();
+        }
+
         if (!empty($_GET['besm_dl'])) {
             setcookie('besm_download', sanitize_text_field(wp_unslash($_GET['besm_dl'])), time() + 60, '/');
         }
