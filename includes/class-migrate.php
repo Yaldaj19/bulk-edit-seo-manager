@@ -1,17 +1,18 @@
 <?php
 /**
- * Full export / import as a ZIP bundle (CSV + image files).
+ * Full export / import as a ZIP bundle (CSV + image files) for cross-site transfer.
  *
- * Solves the cross-site image problem: because a remote host cannot download
- * images from a local (localhost) site, the actual image FILES are packaged
- * inside the ZIP. On import the files are side-loaded into the destination
- * media library, featured/gallery images are re-linked by the new attachment
- * IDs, and in-content image URLs are rewritten to the destination site.
- *
- * ZIP layout:
- *   data.csv          — ID + enabled fields (featured/gallery stored as filenames)
- *   images/<file>     — original image files referenced by the exported posts
- *   manifest.json     — { site_url, upload_url, images:[{file,alt}] }
+ * Design notes (hardened for local -> host):
+ *  - Image files are stored in the ZIP under ASCII-safe names (images/a1.webp)
+ *    with a manifest mapping, so Persian/UTF-8 filenames never break across
+ *    Windows -> Linux extraction.
+ *  - Only ORIGINAL attachment files are bundled (never -WxH size variants);
+ *    the destination regenerates sizes. In-content image URLs (original and
+ *    size variants) are rewritten to the destination URLs on import.
+ *  - Import re-links images to the post matched by ID, falling back to SLUG
+ *    when the ID does not exist on the destination.
+ *  - De-duplication: an image already present in the destination media library
+ *    (matched by original filename) is reused instead of re-uploaded.
  */
 
 if (!defined('ABSPATH')) {
@@ -34,7 +35,6 @@ class BESM_Migrate
 
     /* ============================ EXPORT ============================ */
 
-    /** Stream a ZIP bundle of the filtered posts + their images. */
     public function export()
     {
         if (!current_user_can('edit_posts')) {
@@ -62,7 +62,6 @@ class BESM_Migrate
         $args['fields'] = 'ids';
         $post_ids = get_posts($args);
 
-        // Columns: ID + exportable enabled fields.
         $skip = array('url', 'product_attributes');
         $columns = array('ID');
         foreach ($enabled as $f) {
@@ -74,34 +73,34 @@ class BESM_Migrate
                 $columns[] = 'featured_image_alt';
             }
         }
+        // Always carry slug so the destination can match by slug when IDs differ.
+        if (!in_array('slug', $columns, true)) {
+            $columns[] = 'slug';
+        }
 
-        $upload_dir = wp_get_upload_dir();
-        $images = array();      // basename => absolute file path
-        $image_meta = array();  // basename => alt
+        $upload = wp_get_upload_dir();
+        $bundle = array();  // key => ['path','file','orig_name','alt','old_url']
+        $byAtt  = array();  // attachment_id => key
+        $idx    = array('n' => 0);
 
-        // Build CSV rows in memory.
-        $rows = array();
-        $rows[] = $columns;
-
+        $rows = array($columns);
         foreach ($post_ids as $pid) {
             $data = $this->post_handler->get_post_data($pid, $enabled);
             if (!$data) {
                 continue;
             }
-
             $row = array();
             foreach ($columns as $col) {
-                $row[] = $this->export_cell($col, $data, $pid, $images, $image_meta);
+                $row[] = $this->export_cell($col, $data, $pid, $bundle, $byAtt, $idx);
             }
             $rows[] = $row;
 
-            // Collect in-content images that live in this site's uploads.
             if (!empty($data['content'])) {
-                $this->collect_content_images($data['content'], $upload_dir, $images, $image_meta);
+                $this->register_content_images($data['content'], $upload, $bundle, $byAtt, $idx);
             }
         }
 
-        // Write CSV to a temp string.
+        // CSV into a temp string.
         $fh = fopen('php://temp', 'r+');
         fwrite($fh, "\xEF\xBB\xBF");
         foreach ($rows as $r) {
@@ -111,18 +110,22 @@ class BESM_Migrate
         $csv = stream_get_contents($fh);
         fclose($fh);
 
-        // Manifest.
         $manifest = array(
-            'site_url'   => home_url(),
-            'upload_url' => $upload_dir['baseurl'],
-            'generated'  => gmdate('c'),
-            'images'     => array(),
+            'site_url'    => home_url(),
+            'upload_url'  => $upload['baseurl'],
+            'generated'   => gmdate('c'),
+            'images'      => array(),
         );
-        foreach ($images as $base => $path) {
-            $manifest['images'][] = array('file' => $base, 'alt' => isset($image_meta[$base]) ? $image_meta[$base] : '');
+        foreach ($bundle as $key => $info) {
+            $manifest['images'][] = array(
+                'key'       => $key,
+                'file'      => $info['file'],
+                'orig_name' => $info['orig_name'],
+                'alt'       => $info['alt'],
+                'old_url'   => $info['old_url'],
+            );
         }
 
-        // Build ZIP in a temp file.
         $tmp = wp_tempnam('besm-export.zip');
         $zip = new ZipArchive();
         if ($zip->open($tmp, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
@@ -130,15 +133,14 @@ class BESM_Migrate
         }
         $zip->addFromString('data.csv', $csv);
         $zip->addFromString('manifest.json', wp_json_encode($manifest));
-        foreach ($images as $base => $path) {
-            if (is_readable($path)) {
-                $zip->addFile($path, 'images/' . $base);
+        foreach ($bundle as $key => $info) {
+            if (is_readable($info['path'])) {
+                $zip->addFile($info['path'], 'images/' . $info['file']);
             }
         }
         $zip->close();
 
-        // CRITICAL: discard any buffered output (stray PHP notices/warnings,
-        // whitespace, other plugins) so they can't corrupt the binary stream.
+        // Keep the binary stream clean — never let a stray notice corrupt it.
         @ini_set('display_errors', '0');
         while (ob_get_level()) {
             ob_end_clean();
@@ -158,33 +160,32 @@ class BESM_Migrate
         exit;
     }
 
-    /** Resolve a CSV cell for export; registers referenced image files. */
-    private function export_cell($col, $data, $pid, &$images, &$image_meta)
+    private function export_cell($col, $data, $pid, &$bundle, &$byAtt, &$idx)
     {
         if ($col === 'ID') {
             return $pid;
         }
-
         if ($col === 'featured_image') {
             if (is_array($data['featured_image'] ?? null) && !empty($data['featured_image']['id'])) {
-                return $this->register_attachment($data['featured_image']['id'], $images, $image_meta);
+                return $this->register_attachment((int) $data['featured_image']['id'], $bundle, $byAtt, $idx);
             }
             return '';
         }
-
         if ($col === 'featured_image_alt') {
             return is_array($data['featured_image'] ?? null) ? ($data['featured_image']['alt'] ?? '') : '';
         }
-
         if ($col === 'gallery') {
             if (!empty($data['gallery']) && is_array($data['gallery'])) {
-                $names = array();
+                $keys = array();
                 foreach ($data['gallery'] as $g) {
                     if (!empty($g['id'])) {
-                        $names[] = $this->register_attachment($g['id'], $images, $image_meta);
+                        $k = $this->register_attachment((int) $g['id'], $bundle, $byAtt, $idx);
+                        if ($k) {
+                            $keys[] = $k;
+                        }
                     }
                 }
-                return implode('|', array_filter($names));
+                return implode('|', $keys);
             }
             return '';
         }
@@ -199,35 +200,51 @@ class BESM_Migrate
         return (string) $value;
     }
 
-    /** Register an attachment's original file; return its basename. */
-    private function register_attachment($att_id, &$images, &$image_meta)
+    /** Bundle an attachment's ORIGINAL file under an ASCII key. Returns the key. */
+    private function register_attachment($att_id, &$bundle, &$byAtt, &$idx)
     {
+        if (isset($byAtt[$att_id])) {
+            return $byAtt[$att_id];
+        }
         $path = get_attached_file($att_id);
         if (!$path || !file_exists($path)) {
             return '';
         }
-        $base = wp_basename($path);
-        $images[$base] = $path;
-        $image_meta[$base] = get_post_meta($att_id, '_wp_attachment_image_alt', true);
-        return $base;
+        $ext  = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+        $key  = 'a' . (++$idx['n']);
+        $bundle[$key] = array(
+            'path'      => $path,
+            'file'      => $key . ($ext ? '.' . $ext : ''),
+            'orig_name' => wp_basename($path),
+            'alt'       => (string) get_post_meta($att_id, '_wp_attachment_image_alt', true),
+            'old_url'   => wp_get_attachment_url($att_id),
+        );
+        $byAtt[$att_id] = $key;
+        return $key;
     }
 
-    /** Find <img> files inside content that belong to this site's uploads. */
-    private function collect_content_images($content, $upload_dir, &$images, &$image_meta)
+    /** Find attachments referenced inside content and bundle their originals. */
+    private function register_content_images($content, $upload, &$bundle, &$byAtt, &$idx)
     {
-        if (!preg_match_all('/src=["\']([^"\']+)["\']/i', $content, $m)) {
-            return;
-        }
-        foreach ($m[1] as $url) {
-            if (strpos($url, $upload_dir['baseurl']) !== 0) {
-                continue;
+        // By wp-image-<id> class (most reliable).
+        if (preg_match_all('/wp-image-(\d+)/', $content, $m)) {
+            foreach (array_unique($m[1]) as $aid) {
+                $this->register_attachment((int) $aid, $bundle, $byAtt, $idx);
             }
-            $rel  = ltrim(substr($url, strlen($upload_dir['baseurl'])), '/');
-            $path = trailingslashit($upload_dir['basedir']) . $rel;
-            if (file_exists($path)) {
-                $base = wp_basename($path);
-                if (!isset($images[$base])) {
-                    $images[$base] = $path;
+        }
+        // By src URL (strip any -WxH size suffix to resolve the original).
+        if (preg_match_all('/src=["\']([^"\']+)["\']/i', $content, $m2)) {
+            foreach ($m2[1] as $url) {
+                if (strpos($url, $upload['baseurl']) !== 0) {
+                    continue;
+                }
+                $full = preg_replace('/-\d+x\d+(\.\w+)$/', '$1', $url);
+                $aid  = attachment_url_to_postid($full);
+                if (!$aid) {
+                    $aid = attachment_url_to_postid($url);
+                }
+                if ($aid) {
+                    $this->register_attachment((int) $aid, $bundle, $byAtt, $idx);
                 }
             }
         }
@@ -235,12 +252,6 @@ class BESM_Migrate
 
     /* ============================ IMPORT ============================ */
 
-    /**
-     * Import a ZIP bundle: side-load images, re-link featured/gallery,
-     * rewrite in-content URLs, then bulk-save every row.
-     *
-     * @return array result summary
-     */
     public function import($file)
     {
         if (!$this->available()) {
@@ -257,71 +268,103 @@ class BESM_Migrate
         if ($zip->open($file['tmp_name']) !== true) {
             return array('success' => false, 'message' => esc_html__('فایل ZIP معتبر نیست.', 'bulk-edit-seo'));
         }
-
         $tmp_dir = trailingslashit(get_temp_dir()) . 'besm-import-' . wp_generate_password(8, false);
         wp_mkdir_p($tmp_dir);
         $zip->extractTo($tmp_dir);
         $zip->close();
 
         $csv_path = $tmp_dir . '/data.csv';
-        $manifest_path = $tmp_dir . '/manifest.json';
         if (!file_exists($csv_path)) {
             $this->rrmdir($tmp_dir);
             return array('success' => false, 'message' => esc_html__('فایل data.csv در بسته پیدا نشد.', 'bulk-edit-seo'));
         }
 
-        $manifest = file_exists($manifest_path) ? json_decode(file_get_contents($manifest_path), true) : array();
-        $alt_map = array();
-        if (!empty($manifest['images'])) {
-            foreach ($manifest['images'] as $img) {
-                if (!empty($img['file'])) {
-                    $alt_map[$img['file']] = isset($img['alt']) ? $img['alt'] : '';
-                }
-            }
-        }
+        $manifest = file_exists($tmp_dir . '/manifest.json')
+            ? json_decode(file_get_contents($tmp_dir . '/manifest.json'), true)
+            : array('images' => array());
 
         require_once ABSPATH . 'wp-admin/includes/image.php';
         require_once ABSPATH . 'wp-admin/includes/file.php';
         require_once ABSPATH . 'wp-admin/includes/media.php';
 
-        // Side-load every image once; map basename => new attachment id/url.
-        $img_map = array();
-        $images_dir = $tmp_dir . '/images';
-        if (is_dir($images_dir)) {
-            foreach (scandir($images_dir) as $f) {
-                if ($f === '.' || $f === '..') {
+        // Side-load each bundled image once (de-duplicated by original filename).
+        // map key => ['id','old_url','new_url']
+        $map = array();
+        $created = 0;
+        if (!empty($manifest['images'])) {
+            foreach ($manifest['images'] as $img) {
+                if (empty($img['key']) || empty($img['file'])) {
                     continue;
                 }
-                $img_map[$f] = $this->sideload($images_dir . '/' . $f, isset($alt_map[$f]) ? $alt_map[$f] : '');
+                $src = $tmp_dir . '/images/' . $img['file'];
+                if (!file_exists($src)) {
+                    continue;
+                }
+                $orig = isset($img['orig_name']) ? $img['orig_name'] : wp_basename($img['file']);
+                $alt  = isset($img['alt']) ? $img['alt'] : '';
+
+                $existing = $this->find_attachment_by_filename($orig);
+                if ($existing) {
+                    $id = $existing;
+                } else {
+                    $id = $this->sideload($src, $orig, $alt);
+                    if ($id) {
+                        $created++;
+                    }
+                }
+                if ($id) {
+                    $map[$img['key']] = array(
+                        'id'      => $id,
+                        'old_url' => isset($img['old_url']) ? $img['old_url'] : '',
+                        'new_url' => wp_get_attachment_url($id),
+                    );
+                }
             }
         }
 
-        $new_upload = wp_get_upload_dir();
-        $old_upload_url = isset($manifest['upload_url']) ? $manifest['upload_url'] : '';
-
-        // Parse CSV and build posts_data for BESM_Bulk_Save.
+        // Parse CSV rows.
         $handle = fopen($csv_path, 'r');
         $header = fgetcsv($handle);
         if ($header) {
             $header[0] = preg_replace('/^\xEF\xBB\xBF/', '', $header[0]);
             $header = array_map('trim', $header);
         }
-        $id_index = $header ? array_search('ID', $header, true) : false;
+        $id_index   = $header ? array_search('ID', $header, true) : false;
+        $slug_index = $header ? array_search('slug', $header, true) : false;
         if ($id_index === false) {
             fclose($handle);
             $this->rrmdir($tmp_dir);
             return array('success' => false, 'message' => esc_html__('ستون ID در data.csv نیست.', 'bulk-edit-seo'));
         }
 
-        $posts_data = array();
+        $settings   = get_option('besm_settings', array());
+        $post_type  = isset($settings['active_post_type']) ? $settings['active_post_type'] : 'post';
         $bool_fields = array('robots_noindex', 'robots_nofollow', 'manage_stock');
+
+        $posts_data = array();
+        $not_found  = 0;
+        $matched_by_slug = 0;
 
         while (($cells = fgetcsv($handle)) !== false) {
             if (count(array_filter($cells, 'strlen')) === 0) {
                 continue;
             }
-            $pid = isset($cells[$id_index]) ? intval($cells[$id_index]) : 0;
-            if (!$pid) {
+            $csv_id = isset($cells[$id_index]) ? intval($cells[$id_index]) : 0;
+            $slug   = ($slug_index !== false && isset($cells[$slug_index])) ? trim($cells[$slug_index]) : '';
+
+            // Resolve the real target post on THIS site: by ID, else by slug.
+            $target = 0;
+            if ($csv_id && get_post($csv_id)) {
+                $target = $csv_id;
+            } elseif ($slug) {
+                $found = get_posts(array('post_type' => $post_type, 'name' => $slug, 'post_status' => 'any', 'posts_per_page' => 1, 'fields' => 'ids'));
+                if (!empty($found)) {
+                    $target = (int) $found[0];
+                    $matched_by_slug++;
+                }
+            }
+            if (!$target) {
+                $not_found++;
                 continue;
             }
 
@@ -333,17 +376,22 @@ class BESM_Migrate
                 $val = $cells[$i];
 
                 if ($key === 'featured_image') {
-                    $fields['featured_image'] = ($val !== '' && isset($img_map[$val]['id'])) ? $img_map[$val]['id'] : 0;
+                    // Only set when we have a real mapped image — never clear an existing one.
+                    if ($val !== '' && isset($map[$val]['id'])) {
+                        $fields['featured_image'] = $map[$val]['id'];
+                    }
                 } elseif ($key === 'gallery') {
                     $ids = array();
-                    foreach (array_filter(explode('|', $val)) as $base) {
-                        if (isset($img_map[$base]['id'])) {
-                            $ids[] = $img_map[$base]['id'];
+                    foreach (array_filter(explode('|', $val)) as $k) {
+                        if (isset($map[$k]['id'])) {
+                            $ids[] = $map[$k]['id'];
                         }
                     }
-                    $fields['gallery'] = implode(',', $ids);
+                    if ($ids) {
+                        $fields['gallery'] = implode(',', $ids);
+                    }
                 } elseif ($key === 'content') {
-                    $fields['content'] = $this->rewrite_content($val, $old_upload_url, $new_upload['baseurl'], $img_map);
+                    $fields['content'] = $this->rewrite_content($val, $map);
                 } elseif (taxonomy_exists($key)) {
                     $tids = $this->resolve_terms($val, $key);
                     if ($tids) {
@@ -358,56 +406,51 @@ class BESM_Migrate
             }
 
             if ($fields) {
-                $posts_data[$pid] = $fields;
+                $posts_data[$target] = $fields;
             }
         }
         fclose($handle);
         $this->rrmdir($tmp_dir);
 
         if (empty($posts_data)) {
-            return array('success' => false, 'message' => esc_html__('هیچ ردیف معتبری برای ذخیره پیدا نشد.', 'bulk-edit-seo'));
+            return array(
+                'success'   => false,
+                'message'   => esc_html__('هیچ پستی برای به‌روزرسانی پیدا نشد (نه با ID نه با نامک).', 'bulk-edit-seo'),
+                'not_found' => $not_found,
+            );
         }
 
         $saver   = new BESM_Bulk_Save();
         $results = $saver->save_posts($posts_data);
 
         return array(
-            'success'      => $results['success'],
-            'saved_count'  => $results['saved_count'],
-            'failed_count' => $results['failed_count'],
-            'images'       => count($img_map),
-            'errors'       => $results['errors'],
+            'success'       => $results['success'],
+            'saved_count'   => $results['saved_count'],
+            'failed_count'  => $results['failed_count'],
+            'images'        => $created,
+            'not_found'     => $not_found,
+            'matched_slug'  => $matched_by_slug,
+            'errors'        => $results['errors'],
         );
     }
 
-    /** Side-load one file into the media library. Returns {id,url}. */
-    private function sideload($path, $alt)
+    /** Side-load a file into the media library with a chosen filename. Returns new attachment id. */
+    private function sideload($path, $name, $alt)
     {
-        // Reuse an existing attachment with the same filename if present.
-        $base = wp_basename($path);
-        $existing = $this->find_attachment_by_filename($base);
-        if ($existing) {
-            if ($alt !== '') {
-                update_post_meta($existing, '_wp_attachment_image_alt', sanitize_text_field($alt));
-            }
-            return array('id' => $existing, 'url' => wp_get_attachment_url($existing));
-        }
-
-        $tmp_copy = wp_tempnam($base);
+        $tmp_copy = wp_tempnam($name);
         copy($path, $tmp_copy);
-        $file_array = array('name' => $base, 'tmp_name' => $tmp_copy);
-
-        $att_id = media_handle_sideload($file_array, 0);
+        $att_id = media_handle_sideload(array('name' => $name, 'tmp_name' => $tmp_copy), 0);
         if (is_wp_error($att_id)) {
             @unlink($tmp_copy);
-            return array('id' => 0, 'url' => '');
+            return 0;
         }
         if ($alt !== '') {
             update_post_meta($att_id, '_wp_attachment_image_alt', sanitize_text_field($alt));
         }
-        return array('id' => $att_id, 'url' => wp_get_attachment_url($att_id));
+        return (int) $att_id;
     }
 
+    /** Reuse an existing attachment that has the same original filename. */
     private function find_attachment_by_filename($basename)
     {
         global $wpdb;
@@ -416,36 +459,51 @@ class BESM_Migrate
             "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_wp_attached_file' AND meta_value LIKE %s LIMIT 1",
             $like
         ));
+        if ($id) {
+            return (int) $id;
+        }
+        // Exact filename (no subdir) fallback.
+        $id = $wpdb->get_var($wpdb->prepare(
+            "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_wp_attached_file' AND meta_value = %s LIMIT 1",
+            $basename
+        ));
         return $id ? (int) $id : 0;
     }
 
-    /** Rewrite in-content image URLs from the source site to this one. */
-    private function rewrite_content($content, $old_upload_url, $new_upload_url, $img_map)
+    /** Rewrite in-content image URLs (original + size variants) to destination URLs. */
+    private function rewrite_content($content, $map)
     {
-        if ($content === '') {
+        if ($content === '' || empty($map)) {
             return $content;
         }
-
-        // Per-file rewrite (handles any renamed basenames too).
-        foreach ($img_map as $base => $info) {
-            if (empty($info['url']) || $base === '') {
+        foreach ($map as $m) {
+            if (empty($m['old_url']) || empty($m['new_url'])) {
                 continue;
             }
-            if ($old_upload_url) {
-                // Replace the old URL ending in this basename with the new URL.
-                $content = preg_replace(
-                    '#' . preg_quote($old_upload_url, '#') . '[^"\']*' . preg_quote($base, '#') . '#',
-                    $info['url'],
-                    $content
-                );
+            $old = $m['old_url'];
+            $new = $m['new_url'];
+
+            // Size variants first: match {name}-WxH.ext for this original and
+            // point them at the destination's regenerated sizes.
+            $meta = wp_get_attachment_metadata($m['id']);
+            if (!empty($meta['sizes']) && is_array($meta['sizes'])) {
+                $old_dir  = dirname($old);
+                $new_dir  = dirname($new);
+                $old_pi   = pathinfo($old);
+                $old_stem = isset($old_pi['filename']) ? $old_pi['filename'] : '';
+                $old_ext  = isset($old_pi['extension']) ? $old_pi['extension'] : '';
+                foreach ($meta['sizes'] as $size) {
+                    if (empty($size['width']) || empty($size['height']) || empty($size['file'])) {
+                        continue;
+                    }
+                    $old_size_url = $old_dir . '/' . $old_stem . '-' . $size['width'] . 'x' . $size['height'] . '.' . $old_ext;
+                    $new_size_url = $new_dir . '/' . $size['file'];
+                    $content = str_replace($old_size_url, $new_size_url, $content);
+                }
             }
+            // Then the original URL.
+            $content = str_replace($old, $new, $content);
         }
-
-        // Fallback: swap the upload base URL wholesale.
-        if ($old_upload_url && $old_upload_url !== $new_upload_url) {
-            $content = str_replace($old_upload_url, $new_upload_url, $content);
-        }
-
         return $content;
     }
 

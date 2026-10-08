@@ -861,3 +861,18 @@ msgstr "Preparing export…"
 
 msgid "در حال پردازش..."
 msgstr "Processing…"
+
+msgid "هیچ پستی برای به‌روزرسانی پیدا نشد (نه با ID نه با نامک)."
+msgstr "No post was found to update (neither by ID nor by slug)."
+
+msgid "%1$d پست به‌روز شد و %2$d تصویر جدید در رسانه ساخته شد."
+msgstr "%1$d posts updated and %2$d new images created in the Media Library."
+
+msgid "(%d مورد با نامک تطبیق داده شد.)"
+msgstr "(%d matched by slug.)"
+
+msgid "%d مورد نه با ID و نه با نامک پیدا نشد."
+msgstr "%d items were found neither by ID nor by slug."
+
+msgid "(%d مورد نه با ID نه با نامک پیدا نشد.)"
+msgstr "(%d items found neither by ID nor by slug.)"

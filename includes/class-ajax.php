@@ -52,24 +52,28 @@ class BESM_Ajax
         $migrate = new BESM_Migrate();
         $results = $migrate->import($_FILES['zip']);
 
-        $failed = isset($results['failed_count']) ? (int) $results['failed_count'] : 0;
-        $imgs   = isset($results['images']) ? (int) $results['images'] : 0;
+        $imgs      = isset($results['images']) ? (int) $results['images'] : 0;
+        $notFound  = isset($results['not_found']) ? (int) $results['not_found'] : 0;
+        $bySlug    = isset($results['matched_slug']) ? (int) $results['matched_slug'] : 0;
 
         if (!empty($results['success'])) {
-            $msg = sprintf(__('%1$d پست به‌روز شد و %2$d تصویر در رسانه ساخته شد.', 'bulk-edit-seo'), $results['saved_count'], $imgs);
-            if ($failed > 0) {
-                $msg .= ' ' . sprintf(__('%d پست با آن ID در این سایت پیدا نشد (ساخته نشد).', 'bulk-edit-seo'), $failed);
+            $msg = sprintf(__('%1$d پست به‌روز شد و %2$d تصویر جدید در رسانه ساخته شد.', 'bulk-edit-seo'), $results['saved_count'], $imgs);
+            if ($bySlug > 0) {
+                $msg .= ' ' . sprintf(__('(%d مورد با نامک تطبیق داده شد.)', 'bulk-edit-seo'), $bySlug);
+            }
+            if ($notFound > 0) {
+                $msg .= ' ' . sprintf(__('%d مورد نه با ID و نه با نامک پیدا نشد.', 'bulk-edit-seo'), $notFound);
             }
             wp_send_json_success(array(
                 'message'      => $msg,
                 'saved_count'  => $results['saved_count'],
-                'failed_count' => $failed,
+                'not_found'    => $notFound,
                 'images'       => $imgs,
             ));
         } else {
             $msg = isset($results['message']) ? $results['message'] : __('خطا در ورود بسته', 'bulk-edit-seo');
-            if ($failed > 0) {
-                $msg .= ' ' . sprintf(__('(%d پست با آن ID پیدا نشد.)', 'bulk-edit-seo'), $failed);
+            if ($notFound > 0) {
+                $msg .= ' ' . sprintf(__('(%d مورد نه با ID نه با نامک پیدا نشد.)', 'bulk-edit-seo'), $notFound);
             }
             wp_send_json_error(array(
                 'message' => $msg,
