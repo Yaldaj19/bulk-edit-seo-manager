@@ -45,8 +45,9 @@ class BESM_Ajax
             wp_send_json_error(array('message' => __('دسترسی غیرمجاز', 'bulk-edit-seo')));
         }
 
-        if (empty($_FILES['zip'])) {
-            wp_send_json_error(array('message' => __('فایلی انتخاب نشده است', 'bulk-edit-seo')));
+        $upload_err = $this->check_upload('zip');
+        if ($upload_err !== '') {
+            wp_send_json_error(array('message' => $upload_err));
         }
 
         $migrate = new BESM_Migrate();
@@ -82,6 +83,34 @@ class BESM_Ajax
         }
     }
 
+    // Inspect an uploaded file field and return a clear error message (or '' if OK).
+    // Surfaces the common "file exceeded the server upload limit" case.
+    private function check_upload($field)
+    {
+        if (empty($_FILES[$field]) || !isset($_FILES[$field]['error'])) {
+            return sprintf(
+                __('فایلی دریافت نشد. اگر فایل بزرگ است احتمالاً از حد آپلود سرور عبور کرده — upload_max_filesize=%1$s و post_max_size=%2$s را افزایش بده.', 'bulk-edit-seo'),
+                ini_get('upload_max_filesize'),
+                ini_get('post_max_size')
+            );
+        }
+        $err = (int) $_FILES[$field]['error'];
+        if ($err === UPLOAD_ERR_OK) {
+            return '';
+        }
+        if (in_array($err, array(UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE), true)) {
+            return sprintf(
+                __('فایل از حد مجاز آپلود سرور بزرگ‌تر است (upload_max_filesize=%1$s، post_max_size=%2$s). این مقادیر را روی هاست افزایش بده.', 'bulk-edit-seo'),
+                ini_get('upload_max_filesize'),
+                ini_get('post_max_size')
+            );
+        }
+        if ($err === UPLOAD_ERR_NO_FILE) {
+            return __('فایلی انتخاب نشده است', 'bulk-edit-seo');
+        }
+        return sprintf(__('خطای آپلود فایل (کد %d).', 'bulk-edit-seo'), $err);
+    }
+
     // Export the filtered result set as a CSV download.
     public function export_csv()
     {
@@ -98,8 +127,9 @@ class BESM_Ajax
             wp_send_json_error(array('message' => __('دسترسی غیرمجاز', 'bulk-edit-seo')));
         }
 
-        if (empty($_FILES['csv'])) {
-            wp_send_json_error(array('message' => __('فایلی انتخاب نشده است', 'bulk-edit-seo')));
+        $upload_err = $this->check_upload('csv');
+        if ($upload_err !== '') {
+            wp_send_json_error(array('message' => $upload_err));
         }
 
         $csv     = new BESM_CSV();

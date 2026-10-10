@@ -5,7 +5,7 @@
 
 ویرایشگر پیشرفته و قدرتمند برای مدیریت گروهی پست‌ها، محصولات و پست‌تایپ‌های سفارشی وردپرس با تمرکز ویژه بر بهینه‌سازی سئو
 
-[![نسخه](https://img.shields.io/badge/version-1.6.0-blue.svg)](https://github.com/Yaldaj19/bulk-edit-seo-manager)
+[![نسخه](https://img.shields.io/badge/version-1.6.1-blue.svg)](https://github.com/Yaldaj19/bulk-edit-seo-manager)
 [![وردپرس](https://img.shields.io/badge/wordpress-5.8%2B-green.svg)](https://wordpress.org)
 [![PHP](https://img.shields.io/badge/php-7.4%2B-purple.svg)](https://php.net)
 [![مجوز](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)

@@ -876,3 +876,12 @@ msgstr "%d items were found neither by ID nor by slug."
 
 msgid "(%d مورد نه با ID نه با نامک پیدا نشد.)"
 msgstr "(%d items found neither by ID nor by slug.)"
+
+msgid "فایلی دریافت نشد. اگر فایل بزرگ است احتمالاً از حد آپلود سرور عبور کرده — upload_max_filesize=%1$s و post_max_size=%2$s را افزایش بده."
+msgstr "No file was received. If the file is large it likely exceeded the server upload limit — increase upload_max_filesize=%1$s and post_max_size=%2$s."
+
+msgid "فایل از حد مجاز آپلود سرور بزرگ‌تر است (upload_max_filesize=%1$s، post_max_size=%2$s). این مقادیر را روی هاست افزایش بده."
+msgstr "The file is larger than the server upload limit (upload_max_filesize=%1$s, post_max_size=%2$s). Increase these values on the host."
+
+msgid "خطای آپلود فایل (کد %d)."
+msgstr "File upload error (code %d)."
