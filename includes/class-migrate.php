@@ -23,6 +23,9 @@ class BESM_Migrate
 {
     private $post_handler;
 
+    /** Per-image side-load failures collected during import (surfaced to the UI). */
+    private $sideload_errors = array();
+
     public function __construct()
     {
         $this->post_handler = new BESM_Post_Handler();
@@ -290,7 +293,13 @@ class BESM_Migrate
         // Side-load each bundled image once (de-duplicated by original filename).
         // map key => ['id','old_url','new_url']
         $map = array();
-        $created = 0;
+        $created  = 0;
+        $reused   = 0;
+        $expected = !empty($manifest['images']) ? count($manifest['images']) : 0;
+
+        // Restrictive hosts often reject .webp/.avif or fail finfo mime checks.
+        // Relax those checks for the duration of the import so side-loading works.
+        $this->add_upload_filters();
         if (!empty($manifest['images'])) {
             foreach ($manifest['images'] as $img) {
                 if (empty($img['key']) || empty($img['file'])) {
@@ -298,6 +307,7 @@ class BESM_Migrate
                 }
                 $src = $tmp_dir . '/images/' . $img['file'];
                 if (!file_exists($src)) {
+                    $this->sideload_errors[] = ($img['orig_name'] ?? $img['file']) . ': فایل در بسته نبود';
                     continue;
                 }
                 $orig = isset($img['orig_name']) ? $img['orig_name'] : wp_basename($img['file']);
@@ -306,6 +316,7 @@ class BESM_Migrate
                 $existing = $this->find_attachment_by_filename($orig);
                 if ($existing) {
                     $id = $existing;
+                    $reused++;
                 } else {
                     $id = $this->sideload($src, $orig, $alt);
                     if ($id) {
@@ -321,6 +332,7 @@ class BESM_Migrate
                 }
             }
         }
+        $this->remove_upload_filters();
 
         // Parse CSV rows.
         $handle = fopen($csv_path, 'r');
@@ -424,23 +436,78 @@ class BESM_Migrate
         $results = $saver->save_posts($posts_data);
 
         return array(
-            'success'       => $results['success'],
-            'saved_count'   => $results['saved_count'],
-            'failed_count'  => $results['failed_count'],
-            'images'        => $created,
-            'not_found'     => $not_found,
-            'matched_slug'  => $matched_by_slug,
-            'errors'        => $results['errors'],
+            'success'         => $results['success'],
+            'saved_count'     => $results['saved_count'],
+            'failed_count'    => $results['failed_count'],
+            'images'          => $created,
+            'images_reused'   => $reused,
+            'images_expected' => $expected,
+            'image_errors'    => $this->sideload_errors,
+            'not_found'       => $not_found,
+            'matched_slug'    => $matched_by_slug,
+            'errors'          => $results['errors'],
         );
+    }
+
+    /* ---- Make side-loading resilient on restrictive hosts ---- */
+
+    private function add_upload_filters()
+    {
+        add_filter('upload_mimes', array($this, 'filter_upload_mimes'), 99);
+        add_filter('wp_check_filetype_and_ext', array($this, 'filter_check_filetype'), 99, 4);
+    }
+
+    private function remove_upload_filters()
+    {
+        remove_filter('upload_mimes', array($this, 'filter_upload_mimes'), 99);
+        remove_filter('wp_check_filetype_and_ext', array($this, 'filter_check_filetype'), 99);
+    }
+
+    /** Ensure common web image types are in the allowed-upload list during import. */
+    public function filter_upload_mimes($mimes)
+    {
+        $mimes['webp'] = 'image/webp';
+        $mimes['avif'] = 'image/avif';
+        if (!isset($mimes['jpg|jpeg|jpe'])) {
+            $mimes['jpg|jpeg|jpe'] = 'image/jpeg';
+        }
+        return $mimes;
+    }
+
+    /** Trust the extension for known image types when finfo returns no/mismatched mime. */
+    public function filter_check_filetype($data, $file, $filename, $mimes)
+    {
+        if (!empty($data['ext']) && !empty($data['type'])) {
+            return $data;
+        }
+        $map = array(
+            'webp' => 'image/webp',
+            'avif' => 'image/avif',
+            'jpg'  => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'png'  => 'image/png',
+            'gif'  => 'image/gif',
+            'bmp'  => 'image/bmp',
+        );
+        $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        if (isset($map[$ext])) {
+            $data['ext']  = $ext;
+            $data['type'] = $map[$ext];
+        }
+        return $data;
     }
 
     /** Side-load a file into the media library with a chosen filename. Returns new attachment id. */
     private function sideload($path, $name, $alt)
     {
         $tmp_copy = wp_tempnam($name);
-        copy($path, $tmp_copy);
+        if (!$tmp_copy || !@copy($path, $tmp_copy)) {
+            $this->sideload_errors[] = $name . ': کپی فایل موقت ناموفق بود';
+            return 0;
+        }
         $att_id = media_handle_sideload(array('name' => $name, 'tmp_name' => $tmp_copy), 0);
         if (is_wp_error($att_id)) {
+            $this->sideload_errors[] = $name . ': ' . $att_id->get_error_message();
             @unlink($tmp_copy);
             return 0;
         }

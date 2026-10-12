@@ -54,22 +54,29 @@ class BESM_Ajax
         $results = $migrate->import($_FILES['zip']);
 
         $imgs      = isset($results['images']) ? (int) $results['images'] : 0;
+        $reused    = isset($results['images_reused']) ? (int) $results['images_reused'] : 0;
+        $expected  = isset($results['images_expected']) ? (int) $results['images_expected'] : 0;
+        $imgErrors = isset($results['image_errors']) && is_array($results['image_errors']) ? $results['image_errors'] : array();
         $notFound  = isset($results['not_found']) ? (int) $results['not_found'] : 0;
         $bySlug    = isset($results['matched_slug']) ? (int) $results['matched_slug'] : 0;
 
         if (!empty($results['success'])) {
-            $msg = sprintf(__('%1$d پست به‌روز شد و %2$d تصویر جدید در رسانه ساخته شد.', 'bulk-edit-seo'), $results['saved_count'], $imgs);
+            $msg = sprintf(__('%1$d پست به‌روز شد. تصاویر: %2$d جدید ساخته شد، %3$d موجود استفاده شد (از %4$d تصویر بسته).', 'bulk-edit-seo'), $results['saved_count'], $imgs, $reused, $expected);
             if ($bySlug > 0) {
                 $msg .= ' ' . sprintf(__('(%d مورد با نامک تطبیق داده شد.)', 'bulk-edit-seo'), $bySlug);
             }
             if ($notFound > 0) {
                 $msg .= ' ' . sprintf(__('%d مورد نه با ID و نه با نامک پیدا نشد.', 'bulk-edit-seo'), $notFound);
             }
+            if (!empty($imgErrors)) {
+                $msg .= ' ' . sprintf(__('⚠ %d تصویر آپلود نشد — دلیل اولین مورد: %s', 'bulk-edit-seo'), count($imgErrors), $imgErrors[0]);
+            }
             wp_send_json_success(array(
                 'message'      => $msg,
                 'saved_count'  => $results['saved_count'],
                 'not_found'    => $notFound,
                 'images'       => $imgs,
+                'image_errors' => $imgErrors,
             ));
         } else {
             $msg = isset($results['message']) ? $results['message'] : __('خطا در ورود بسته', 'bulk-edit-seo');
