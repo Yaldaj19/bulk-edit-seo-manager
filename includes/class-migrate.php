@@ -295,6 +295,7 @@ class BESM_Migrate
         $map = array();
         $created  = 0;
         $reused   = 0;
+        $restored = 0;
         $expected = !empty($manifest['images']) ? count($manifest['images']) : 0;
 
         // Restrictive hosts often reject .webp/.avif or fail finfo mime checks.
@@ -315,8 +316,25 @@ class BESM_Migrate
 
                 $existing = $this->find_attachment_by_filename($orig);
                 if ($existing) {
-                    $id = $existing;
-                    $reused++;
+                    // A DB record exists — but the actual file may be missing on disk
+                    // (common when only the database was migrated, not wp-content/uploads).
+                    // In that case, restore the real file from the bundle to the exact
+                    // path the DB expects, so existing URLs resolve without any rewrite.
+                    $existing_path = get_attached_file($existing);
+                    if ($existing_path && file_exists($existing_path)) {
+                        $id = $existing;
+                        $reused++;
+                    } else {
+                        $id = $this->restore_missing_file($existing, $src, $alt);
+                        if ($id) {
+                            $restored++;
+                        } else {
+                            $id = $this->sideload($src, $orig, $alt);
+                            if ($id) {
+                                $created++;
+                            }
+                        }
+                    }
                 } else {
                     $id = $this->sideload($src, $orig, $alt);
                     if ($id) {
@@ -441,6 +459,7 @@ class BESM_Migrate
             'failed_count'    => $results['failed_count'],
             'images'          => $created,
             'images_reused'   => $reused,
+            'images_restored' => $restored,
             'images_expected' => $expected,
             'image_errors'    => $this->sideload_errors,
             'not_found'       => $not_found,
@@ -495,6 +514,33 @@ class BESM_Migrate
             $data['type'] = $map[$ext];
         }
         return $data;
+    }
+
+    /**
+     * Restore a bundled image file onto an EXISTING attachment whose file is
+     * missing on disk (DB-only migration). Copies the file to the exact path the
+     * attachment record points to, then regenerates sizes. Returns the same id.
+     */
+    private function restore_missing_file($att_id, $src, $alt)
+    {
+        $dest = get_attached_file($att_id);
+        if (!$dest) {
+            return 0;
+        }
+        wp_mkdir_p(dirname($dest));
+        if (!@copy($src, $dest)) {
+            $this->sideload_errors[] = wp_basename($dest) . ': بازگردانی فایل روی رکورد موجود ناموفق بود';
+            return 0;
+        }
+        // Rebuild metadata/thumbnails for the restored original.
+        $meta = wp_generate_attachment_metadata($att_id, $dest);
+        if (!empty($meta)) {
+            wp_update_attachment_metadata($att_id, $meta);
+        }
+        if ($alt !== '' && get_post_meta($att_id, '_wp_attachment_image_alt', true) === '') {
+            update_post_meta($att_id, '_wp_attachment_image_alt', sanitize_text_field($alt));
+        }
+        return (int) $att_id;
     }
 
     /** Side-load a file into the media library with a chosen filename. Returns new attachment id. */

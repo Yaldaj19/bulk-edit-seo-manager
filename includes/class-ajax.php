@@ -55,13 +55,14 @@ class BESM_Ajax
 
         $imgs      = isset($results['images']) ? (int) $results['images'] : 0;
         $reused    = isset($results['images_reused']) ? (int) $results['images_reused'] : 0;
+        $restored  = isset($results['images_restored']) ? (int) $results['images_restored'] : 0;
         $expected  = isset($results['images_expected']) ? (int) $results['images_expected'] : 0;
         $imgErrors = isset($results['image_errors']) && is_array($results['image_errors']) ? $results['image_errors'] : array();
         $notFound  = isset($results['not_found']) ? (int) $results['not_found'] : 0;
         $bySlug    = isset($results['matched_slug']) ? (int) $results['matched_slug'] : 0;
 
         if (!empty($results['success'])) {
-            $msg = sprintf(__('%1$d پست به‌روز شد. تصاویر: %2$d جدید ساخته شد، %3$d موجود استفاده شد (از %4$d تصویر بسته).', 'bulk-edit-seo'), $results['saved_count'], $imgs, $reused, $expected);
+            $msg = sprintf(__('%1$d پست به‌روز شد. تصاویر: %2$d جدید، %3$d بازگردانی‌شده (فایل گم‌شده)، %4$d موجود (از %5$d تصویر بسته).', 'bulk-edit-seo'), $results['saved_count'], $imgs, $restored, $reused, $expected);
             if ($bySlug > 0) {
                 $msg .= ' ' . sprintf(__('(%d مورد با نامک تطبیق داده شد.)', 'bulk-edit-seo'), $bySlug);
             }
