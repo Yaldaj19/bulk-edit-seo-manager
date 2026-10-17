@@ -23,6 +23,26 @@ $post_type_label = $this->post_handler->get_post_type_label($active_post_type);
             <span class="dashicons dashicons-arrow-down-alt2"></span>
         </button>
         <div class="besm-help-content" style="display: block;">
+            <div class="besm-help-section besm-help-migrate" style="background:#eef6ff;border:1px solid #bcdcff;border-radius:10px;padding:14px 18px;margin-bottom:16px;">
+                <h3>🚚 <?php esc_html_e('انتقال محتوا و تصاویر از یک سایت به سایت دیگر (مهم)', 'bulk-edit-seo'); ?></h3>
+                <p style="margin:6px 0 10px;"><?php echo wp_kses_post( __('برای انتقال پست‌ها/محصولات <strong>همراه با همه‌ی عکس‌هایشان</strong> (تصویر شاخص، گالری و <strong>عکس‌های داخل متن</strong>) به سایت دیگر، همیشه از مسیر <strong>ZIP</strong> استفاده کنید؛ نه خروجی/ورود CSV ساده.', 'bulk-edit-seo') ); ?></p>
+                <ol style="margin:0 0 10px;padding-inline-start:20px;">
+                    <li><?php echo wp_kses_post( __('در سایت <strong>مبدأ</strong>: دکمه‌ی <strong>«خروجی کامل (ZIP + تصاویر)»</strong> را بزنید تا یک فایل ZIP شامل داده‌ها + فایل همه‌ی عکس‌ها ساخته شود.', 'bulk-edit-seo') ); ?></li>
+                    <li><?php echo wp_kses_post( __('در سایت <strong>مقصد</strong>: دکمه‌ی <strong>«ورود کامل (ZIP + تصاویر)»</strong> را بزنید و همان فایل ZIP را بدهید.', 'bulk-edit-seo') ); ?></li>
+                </ol>
+                <p style="margin:6px 0;"><strong><?php esc_html_e('پلاگین به‌صورت خودکار:', 'bulk-edit-seo'); ?></strong></p>
+                <ul style="margin:0 0 10px;">
+                    <li><?php echo wp_kses_post( __('عکس‌هایی که در مقصد نیستند را در کتابخانه رسانه <strong>آپلود</strong> می‌کند.', 'bulk-edit-seo') ); ?></li>
+                    <li><?php echo wp_kses_post( __('اگر رکورد عکس در دیتابیس مقصد باشد ولی <strong>فایلش گم شده باشد</strong> (حالت رایجِ مهاجرتی که فقط دیتابیس منتقل شده)، فایل را از داخل ZIP <strong>سرِ جای درستش بازمی‌گرداند</strong> و بندانگشتی‌ها را می‌سازد.', 'bulk-edit-seo') ); ?></li>
+                    <li><?php echo wp_kses_post( __('تصویر شاخص و گالری را دوباره <strong>لینک</strong> می‌کند و آدرس <strong>عکس‌های داخل متن</strong> را اصلاح می‌کند.', 'bulk-edit-seo') ); ?></li>
+                </ul>
+                <p style="margin:6px 0;"><strong style="color:#b45309;">⚠️ <?php esc_html_e('شرط‌ها و محدودیت‌ها:', 'bulk-edit-seo'); ?></strong></p>
+                <ul style="margin:0;">
+                    <li><?php echo wp_kses_post( __('در مقصد باید پست‌هایی با <strong>همان ID</strong> (یا در نبودِ ID، همان <strong>نامک/slug</strong>) وجود داشته باشند.', 'bulk-edit-seo') ); ?></li>
+                    <li><?php echo wp_kses_post( __('پلاگین فقط عکس‌هایی را می‌تواند بازگرداند که <strong>داخل فایل ZIP مبدأ باشند</strong>؛ عکسی که در سایت مبدأ هم نباشد قابل بازیابی نیست.', 'bulk-edit-seo') ); ?></li>
+                    <li><?php echo wp_kses_post( __('<strong>ورود CSV</strong> هیچ فایل عکسی منتقل نمی‌کند (فقط متن و شناسه)؛ برای انتقال عکس حتماً ZIP.', 'bulk-edit-seo') ); ?></li>
+                </ul>
+            </div>
             <div class="besm-help-sections">
                 <div class="besm-help-section">
                     <h3>🎯 <?php esc_html_e('شروع کار', 'bulk-edit-seo'); ?></h3>
